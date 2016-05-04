@@ -21,8 +21,6 @@ There several approaches calculate risk using the provided documents:
 
 4. Individual risk calculations can be performed at [https://projectbiglife.ca](https://projectbiglife.ca)
 
-
-
 ## Suggestions and collaboration
 We welcome suggestions to improve algorithm document or implementation of the risk tools. Feel free to open a new issue, pull request or fork.
 
@@ -30,4 +28,6 @@ We also welcome collaborations for future development, validation, calibration o
 
 ## Algorithms
 
-**Mortality Population Risk Tool (MPoRT).** MPoRT calculates 5-year risk of dying (all-causes) based on health beahviours (smoking, physical activity, alcohol, diet), sociodemogrpahic infomation (age, sex, immigrant status, education, etc.) and intermediate risks (Body Mass Index, hyperDeveloped using … Current calibration for Canada, 2013. …
+**Mortality Population Risk Tool (MPoRT).** MPoRT predicts 5-year risk of dying (all-causes) based on health beahviours (smoking, physical activity, alcohol, diet), sociodemogrpahic infomation (age, sex, immigrant status, education, etc.) and intermediate risks (Body Mass Index, hypertension, chronic diseases). The model is currently  calibratied for Canada, 2013, with provisions to calibrate to other countries.
+
+Reference: .....
