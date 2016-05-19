@@ -10,22 +10,22 @@
   <DataField name="age_rcs1" optype="continuous" dataType="double"/>
   <DataField name="age_rcs2" optype="continuous" dataType="double"/>
   <DataField name="age_rcs3" optype="continuous" dataType="double"/>
-  <DataField name="packyears" optype="continuous" dataType="double"/>
-  <DataField name="packyears_rcs1" optype="continuous" dataType="double"/>
+  <DataField name="packyears_rscc" optype="continuous" dataType="double"/>
+  <DataField name="packyears_rcsc1" optype="continuous" dataType="double"/>
   <DataField name="FormerSmoker_mt_5" optype="continuous" dataType="double"/>
   <DataField name="FormerSmoker_in_5" optype="continuous" dataType="double"/>
   <DataField name="Smoker" optype="continuous" dataType="double"/>
   <DataField name="age_packyears_int" optype="continuous" dataType="double"/>
   <DataField name="age_FormerSmoker_mt_5_int" optype="continuous" dataType="double"/>
-  <DataField name="age_FS_in_5_int" optype="continuous" dataType="double"/>
-  <DataField name="age_smoker_int" optype="continuous" dataType="double"/>
-  <DataField name="Drinks_last_week" optype="continuous" dataType="double"/>
+  <DataField name="age_FormerSmoker_in_5_int" optype="continuous" dataType="double"/>
+  <DataField name="age_Smoker_int" optype="continuous" dataType="double"/>
+  <DataField name="Drinks_last_week_rcsc" optype="continuous" dataType="double"/>
   <DataField name="Drinks_last_week_rcs1" optype="continuous" dataType="double"/>
-  <DataField name="age_drinks_int" optype="continuous" dataType="double"/>
-  <DataField name="Diet1_fruit_veg" optype="continuous" dataType="double"/>
+  <DataField name="age_Drinks_last_week_int" optype="continuous" dataType="double"/>
+  <DataField name="Diet_fruit_veg" optype="continuous" dataType="double"/>
   <DataField name="Diet2_Potato" optype="continuous" dataType="double"/>
-  <DataField name="age_diet1_int" optype="continuous" dataType="double"/>
-  <DataField name="age_diet2_int" optype="continuous" dataType="double"/>
+  <DataField name="age_Diet_fruit_veg_int" optype="continuous" dataType="double"/>
+  <DataField name="age_Diet2_Potato_int" optype="continuous" dataType="double"/>
   <DataField name="age_diet3_int" optype="continuous" dataType="double"/>
   <DataField name="bmi" optype="continuous" dataType="double"/>
   <DataField name="bmi_rcs1" optype="continuous" dataType="double"/>
@@ -46,26 +46,26 @@
  <GeneralRegressionModel modelType="CoxRegression" modelName="CVDPoRT_malemodel" functionName="regression" algorithmName="coxph" endTimeVariable="ttcvd_dec12_year" statusVariable="censor_cvd_dec12">
   <MiningSchema>
    <MiningField name="survival" usageType="predicted"/>
-   <MiningField name="age_c" usageType="active"/>
+   <MiningField name="age_rcsc" usageType="active"/>
    <MiningField name="age_rcs1" usageType="active"/>
    <MiningField name="age_rcs2" usageType="active"/>
    <MiningField name="age_rcs3" usageType="active"/>
-   <MiningField name="packyears" usageType="active"/>
-   <MiningField name="packyears_rcs1" usageType="active"/>
+   <MiningField name="packyears_rscc" usageType="active"/>
+   <MiningField name="packyears_rcsc1" usageType="active"/>
    <MiningField name="FormerSmoker_mt_5" usageType="active"/>
    <MiningField name="FormerSmoker_in_5" usageType="active"/>
    <MiningField name="Smoker" usageType="active"/>
    <MiningField name="age_packyears_int" usageType="active"/>
-   <MiningField name="age_FS_mt_5_int" usageType="active"/>
-   <MiningField name="age_FS_in_5_int" usageType="active"/>
+   <MiningField name="age_FormerSmoker_mt_5_int" usageType="active"/>
+   <MiningField name="age_FormerSmoker_in_5_int" usageType="active"/>
    <MiningField name="age_smoker_int" usageType="active"/>
-   <MiningField name="Drinks_last_week" usageType="active"/>
+   <MiningField name="Drinks_last_week_rcsc" usageType="active"/>
    <MiningField name="Drinks_last_week_rcs1" usageType="active"/>
-   <MiningField name="age_drinks_int" usageType="active"/>
-   <MiningField name="Diet1_fruit_veg" usageType="active"/>
+   <MiningField name="age_Drinks_last_week_int" usageType="active"/>
+   <MiningField name="Diet_fruit_veg" usageType="active"/>
    <MiningField name="Diet2_Potato" usageType="active"/>
-   <MiningField name="age_diet1_int" usageType="active"/>
-   <MiningField name="age_diet2_int" usageType="active"/>
+   <MiningField name="age_Diet_fruit_veg_int" usageType="active"/>
+   <MiningField name="age_Diet2_Potato_int" usageType="active"/>
    <MiningField name="age_diet3_int" usageType="active"/>
    <MiningField name="bmi" usageType="active"/>
    <MiningField name="bmi_rcs1" usageType="active"/>
@@ -95,26 +95,26 @@
    </OutputField>
   </Output>
   <ParameterList>
-   <Parameter name="p0" label="age_c" referencePoint="-0.77690140762885"/>
+   <Parameter name="p0" label="age_rcsc" referencePoint="-0.77690140762885"/>
    <Parameter name="p1" label="age_rcs1" referencePoint="11.1881965917102"/>
    <Parameter name="p2" label="age_rcs2" referencePoint="3.54283070612868"/>
    <Parameter name="p3" label="age_rcs3" referencePoint="1.04989625512388"/>
-   <Parameter name="p4" label="packyears" referencePoint="12.6993188414071"/>
-   <Parameter name="p5" label="packyears_rcs1" referencePoint="1.60326232564598"/>
+   <Parameter name="p4" label="packyears_rscc" referencePoint="12.6993188414071"/>
+   <Parameter name="p5" label="packyears_rcsc1" referencePoint="1.60326232564598"/>
    <Parameter name="p6" label="FormerSmoker_mt_5" referencePoint="-0.0400165216190034"/>
    <Parameter name="p7" label="FormerSmoker_in_5" referencePoint="0.00676346085613837"/>
    <Parameter name="p8" label="Smoker" referencePoint="0.0135396687223035"/>
    <Parameter name="p9" label="age_packyears_int" referencePoint="108.758905893404"/>
    <Parameter name="p10" label="age_FS_mt_5_int" referencePoint="2.39420183309556"/>
-   <Parameter name="p11" label="age_FS_in_5_int" referencePoint="-0.32286643311178"/>
+   <Parameter name="p11" label="age_FormerSmoker_in_5_int" referencePoint="-0.32286643311178"/>
    <Parameter name="p12" label="age_smoker_int" referencePoint="-1.28427371891394"/>
-   <Parameter name="p13" label="Drinks_last_week" referencePoint="5.80013711151737"/>
+   <Parameter name="p13" label="Drinks_last_week_rcsc" referencePoint="5.80013711151737"/>
    <Parameter name="p14" label="Drinks_last_week_rcs1" referencePoint="1.2029952975034"/>
-   <Parameter name="p15" label="age_drinks_int" referencePoint="-11.0636229862067"/>
-   <Parameter name="p16" label="Diet1_fruit_veg" referencePoint="0.873742371451745"/>
+   <Parameter name="p15" label="age_Drinks_last_week_int" referencePoint="-11.0636229862067"/>
+   <Parameter name="p16" label="Diet_fruit_veg" referencePoint="0.873742371451745"/>
    <Parameter name="p17" label="Diet2_Potato" referencePoint="0.0848876870471791"/>
-   <Parameter name="p18" label="age_diet1_int" referencePoint="3.0451363100911"/>
-   <Parameter name="p19" label="age_diet2_int" referencePoint="1.36677596435316"/>
+   <Parameter name="p18" label="age_Diet_fruit_veg_int" referencePoint="3.0451363100911"/>
+   <Parameter name="p19" label="age_Diet2_Potato_int" referencePoint="1.36677596435316"/>
    <Parameter name="p20" label="age_diet3_int" referencePoint="-1.6629541022651"/>
    <Parameter name="p21" label="bmi" referencePoint="-0.029280469849084"/>
    <Parameter name="p22" label="bmi_rcs1" referencePoint="2.31982541162191"/>
@@ -132,26 +132,26 @@
   </ParameterList>
   <FactorList/>
   <CovariateList>
-   <Predictor name="age_c"/>
+   <Predictor name="age_rcsc"/>
    <Predictor name="age_rcs1"/>
    <Predictor name="age_rcs2"/>
    <Predictor name="age_rcs3"/>
-   <Predictor name="packyears"/>
-   <Predictor name="packyears_rcs1"/>
+   <Predictor name="packyears_rscc"/>
+   <Predictor name="packyears_rcsc1"/>
    <Predictor name="FormerSmoker_mt_5"/>
    <Predictor name="FormerSmoker_in_5"/>
    <Predictor name="Smoker"/>
    <Predictor name="age_packyears_int"/>
    <Predictor name="age_FS_mt_5_int"/>
-   <Predictor name="age_FS_in_5_int"/>
+   <Predictor name="age_FormerSmoker_in_5_int"/>
    <Predictor name="age_smoker_int"/>
-   <Predictor name="Drinks_last_week"/>
+   <Predictor name="Drinks_last_week_rcsc"/>
    <Predictor name="Drinks_last_week_rcs1"/>
-   <Predictor name="age_drinks_int"/>
-   <Predictor name="Diet1_fruit_veg"/>
+   <Predictor name="age_Drinks_last_week_int"/>
+   <Predictor name="Diet_fruit_veg"/>
    <Predictor name="Diet2_Potato"/>
-   <Predictor name="age_diet1_int"/>
-   <Predictor name="age_diet2_int"/>
+   <Predictor name="age_Diet_fruit_veg_int"/>
+   <Predictor name="age_Diet2_Potato_int"/>
    <Predictor name="age_diet3_int"/>
    <Predictor name="bmi"/>
    <Predictor name="bmi_rcs1"/>
@@ -168,31 +168,31 @@
    <Predictor name="surveycycle4"/>
   </CovariateList>
   <PPMatrix>
-   <PPCell value="1" predictorName="age_c" parameterName="p0"/>
+   <PPCell value="1" predictorName="age_rcsc" parameterName="p0"/>
    <PPCell value="1" predictorName="age_rcs1" parameterName="p1"/>
    <PPCell value="1" predictorName="age_rcs2" parameterName="p2"/>
    <PPCell value="1" predictorName="age_rcs3" parameterName="p3"/>
-   <PPCell value="1" predictorName="packyears" parameterName="p4"/>
-   <PPCell value="1" predictorName="packyears" parameterName="p5"/>
-   <PPCell value="1" predictorName="packyears_rcs1" parameterName="p5"/>
+   <PPCell value="1" predictorName="packyears_rscc" parameterName="p4"/>
+   <PPCell value="1" predictorName="packyears_rscc" parameterName="p5"/>
+   <PPCell value="1" predictorName="packyears_rcsc1" parameterName="p5"/>
    <PPCell value="1" predictorName="FormerSmoker_mt_5" parameterName="p6"/>
    <PPCell value="1" predictorName="Smoker" parameterName="p6"/>
    <PPCell value="1" predictorName="FormerSmoker_in_5" parameterName="p7"/>
    <PPCell value="1" predictorName="Smoker" parameterName="p7"/>
    <PPCell value="1" predictorName="Smoker" parameterName="p8"/>
-   <PPCell value="1" predictorName="packyears" parameterName="p9"/>
+   <PPCell value="1" predictorName="packyears_rscc" parameterName="p9"/>
    <PPCell value="1" predictorName="age_packyears_int" parameterName="p9"/>
    <PPCell value="1" predictorName="age_FS_mt_5_int" parameterName="p10"/>
-   <PPCell value="1" predictorName="age_FS_in_5_int" parameterName="p11"/>
+   <PPCell value="1" predictorName="age_FormerSmoker_in_5_int" parameterName="p11"/>
    <PPCell value="1" predictorName="age_smoker_int" parameterName="p12"/>
-   <PPCell value="1" predictorName="Drinks_last_week" parameterName="p13"/>
-   <PPCell value="1" predictorName="Drinks_last_week" parameterName="p14"/>
+   <PPCell value="1" predictorName="Drinks_last_week_rcsc" parameterName="p13"/>
+   <PPCell value="1" predictorName="Drinks_last_week_rcsc" parameterName="p14"/>
    <PPCell value="1" predictorName="Drinks_last_week_rcs1" parameterName="p14"/>
-   <PPCell value="1" predictorName="age_drinks_int" parameterName="p15"/>
-   <PPCell value="1" predictorName="Diet1_fruit_veg" parameterName="p16"/>
+   <PPCell value="1" predictorName="age_Drinks_last_week_int" parameterName="p15"/>
+   <PPCell value="1" predictorName="Diet_fruit_veg" parameterName="p16"/>
    <PPCell value="1" predictorName="Diet2_Potato" parameterName="p17"/>
-   <PPCell value="1" predictorName="age_diet1_int" parameterName="p18"/>
-   <PPCell value="1" predictorName="age_diet2_int" parameterName="p19"/>
+   <PPCell value="1" predictorName="age_Diet_fruit_veg_int" parameterName="p18"/>
+   <PPCell value="1" predictorName="age_Diet2_Potato_int" parameterName="p19"/>
    <PPCell value="1" predictorName="age_diet3_int" parameterName="p20"/>
    <PPCell value="1" predictorName="bmi" parameterName="p21"/>
    <PPCell value="1" predictorName="bmi" parameterName="p22"/>
