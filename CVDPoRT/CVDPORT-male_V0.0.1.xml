@@ -11,7 +11,7 @@
   <DataField name="age_rcs2" optype="continuous" dataType="double"/>
   <DataField name="age_rcs3" optype="continuous" dataType="double"/>
   <DataField name="packyears_rscc" optype="continuous" dataType="double"/>
-  <DataField name="packyears_rcsc1" optype="continuous" dataType="double"/>
+  <DataField name="packyears_rcs1" optype="continuous" dataType="double"/>
   <DataField name="FormerSmoker_mt_5" optype="continuous" dataType="double"/>
   <DataField name="FormerSmoker_in_5" optype="continuous" dataType="double"/>
   <DataField name="Smoker" optype="continuous" dataType="double"/>
@@ -51,7 +51,7 @@
    <MiningField name="age_rcs2" usageType="active"/>
    <MiningField name="age_rcs3" usageType="active"/>
    <MiningField name="packyears_rscc" usageType="active"/>
-   <MiningField name="packyears_rcsc1" usageType="active"/>
+   <MiningField name="packyears_rcs1" usageType="active"/>
    <MiningField name="FormerSmoker_mt_5" usageType="active"/>
    <MiningField name="FormerSmoker_in_5" usageType="active"/>
    <MiningField name="Smoker" usageType="active"/>
@@ -100,7 +100,7 @@
    <Parameter name="p2" label="age_rcs2" referencePoint="3.54283070612868"/>
    <Parameter name="p3" label="age_rcs3" referencePoint="1.04989625512388"/>
    <Parameter name="p4" label="packyears_rscc" referencePoint="12.6993188414071"/>
-   <Parameter name="p5" label="packyears_rcsc1" referencePoint="1.60326232564598"/>
+   <Parameter name="p5" label="packyears_rcs1" referencePoint="1.60326232564598"/>
    <Parameter name="p6" label="FormerSmoker_mt_5" referencePoint="-0.0400165216190034"/>
    <Parameter name="p7" label="FormerSmoker_in_5" referencePoint="0.00676346085613837"/>
    <Parameter name="p8" label="Smoker" referencePoint="0.0135396687223035"/>
@@ -137,7 +137,7 @@
    <Predictor name="age_rcs2"/>
    <Predictor name="age_rcs3"/>
    <Predictor name="packyears_rscc"/>
-   <Predictor name="packyears_rcsc1"/>
+   <Predictor name="packyears_rcs1"/>
    <Predictor name="FormerSmoker_mt_5"/>
    <Predictor name="FormerSmoker_in_5"/>
    <Predictor name="Smoker"/>
@@ -174,7 +174,7 @@
    <PPCell value="1" predictorName="age_rcs3" parameterName="p3"/>
    <PPCell value="1" predictorName="packyears_rscc" parameterName="p4"/>
    <PPCell value="1" predictorName="packyears_rscc" parameterName="p5"/>
-   <PPCell value="1" predictorName="packyears_rcsc1" parameterName="p5"/>
+   <PPCell value="1" predictorName="packyears_rcs1" parameterName="p5"/>
    <PPCell value="1" predictorName="FormerSmoker_mt_5" parameterName="p6"/>
    <PPCell value="1" predictorName="Smoker" parameterName="p6"/>
    <PPCell value="1" predictorName="FormerSmoker_in_5" parameterName="p7"/>
