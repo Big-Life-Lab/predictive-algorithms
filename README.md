@@ -8,7 +8,7 @@ The question file is a LimeSurvey survey template (.lss and .csv).  [https://www
 
 **2) Algorithm file**. This file describes the method to calculate the risk of the outcome, based on the predictors from the questionnaire file.
 
-The algorithm files is a Predictive Modelling Markup Language (PMML 4.1) document. [http://dmg.org](http://dmg.org/)
+The algorithm files are Predictive Modelling Markup Language (PMML 4.1) documents. [http://dmg.org](http://dmg.org/)
 
 ## How to calculate risk using the reference documents
 There several approaches calculate risk using the provided documents:
