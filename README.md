@@ -15,6 +15,7 @@ The algorithm files are Predictive Modelling Markup Language (PMML 4.1) document
 Indivudal algorithms may have additional reference files. These files are described in the README within each algorithm folder.
 
 Examples of additional files include:
+
 **1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference 1 and 2] For the most part, calibration adjusts age and sex-speicific risk estimates based on the population distirubtion of predictors in different settings (i.e. countries) and rate of the risk outcome in a populaiton. Calibration files are tables stored as CSV or JSON files.
 
 Please feel free to add calibration tables for different settings, or contact the algorithm development teams if you have an interested in calibrating algorithms for your setting.
@@ -41,6 +42,6 @@ We also welcome collaborations for future development, validation, calibration o
 
 **Mortality Population Risk Tool (MPoRT).** MPoRT predicts 5-year risk of dying (all-causes) based on health beahviours (smoking, physical activity, alcohol, diet), sociodemogrpahic infomation (age, sex, immigrant status, education, etc.) and intermediate risks (Body Mass Index, hypertension, chronic diseases). The model is currently  calibratied for Canada, 2013, with provisions to calibrate to other countries.
 
-**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published. see [https://ehealth.heartandstroke.ca]http://bmjopen.bmj.com/content/4/10/e006701.full. [https://clinicaltrials.gov/show/NCT02267447]Trial registration number ClinicalTrials.gov NCT02267447.
+**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published. see [https://ehealth.heartandstroke.ca]http://bmjopen.bmj.com/content/4/10/e006701.full. [https://clinicaltrials.gov/show/NCT02267447]. Trial registration number ClinicalTrials.gov NCT02267447.
 
 
