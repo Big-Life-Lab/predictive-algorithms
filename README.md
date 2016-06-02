@@ -8,14 +8,25 @@ The question file is a LimeSurvey survey template (.lss and .csv).  [https://www
 
 **2) Algorithm file**. This file describes the method to calculate the risk of the outcome, based on the predictors from the questionnaire file.
 
-The algorithm files are Predictive Modelling Markup Language (PMML 4.1) documents. [http://dmg.org](http://dmg.org/)
+The algorithm files are Predictive Modelling Markup Language (PMML 4.1) documents (.xml). [http://dmg.org](http://dmg.org/)
+
+## Additional reference files
+
+Indivudal algorithms may have additional reference files. These files are described in the README within each algorithm folder.
+
+Examples of additional files include:
+**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference 1 and 2] For the most part, calibration adjusts age and sex-speicific risk estimates based on the population distirubtion of predictors in different settings (i.e. countries) and rate of the risk outcome in a populaiton. Calibration files are tables stored as CSV or JSON files.
+
+Please feel free to add calibration tables for different settings, or contact the algorithm development teams if you have an interested in calibrating algorithms for your setting.
+
+**2) Algorithm development files** - The files contain code that was used to develop the algorithm or reference documents. For example, algorithms may contain the R databox code used to derivive predictive risks from the original development data. This R code can facilitate development, validation or calibration studies.
 
 ## How to calculate risk using the reference documents
 There several approaches calculate risk using the provided documents:
 
 1. The predictive algorithm parameters within the PMML files can be transcribed into all common programming languages or even used within spreadsheet programs such as MS Excel or Google Sheets.
 
-2. PMML can also be used to within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [https://zemetis.com](https://zemetis.com).
+2. PMML can also be used to within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [http://zementis.com/](http://zementis.com/).
 
 3. We have an API to perform calculations, based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s eHealth Risk Assessment. [https://ehealth.heartandstroke.ca](https://ehealth.heartandstroke.ca) Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
