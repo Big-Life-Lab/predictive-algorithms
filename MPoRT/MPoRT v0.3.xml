@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questionnaire id="114193">
+  <title>MPoRT v0.3</title>
+  <investigator/>
+  <dataCollector/>
+  <questionnaireInfo>
+    <position>after</position>
+    <text>Comments? Feedback? Contact us at  info@projectbiglife.ca.</text>
+    <administration>self</administration>
+  </questionnaireInfo>
+  <section id="51">
+    <sectionInfo>
+      <position>title</position>
+      <text>About You</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <sectionInfo>
+      <position>before</position>
+      <text>Demographic Infomation</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <question>
+      <text>Please indicate your sex:</text>
+      <response varName="sex">
+        <fixed>
+          <category>
+            <label>Male</label>
+            <value>male</value>
+          </category>
+          <category>
+            <label>Female</label>
+            <value>fem</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>What is your age?</text>
+      <response varName="age">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>How tall are you?</text>
+      <subQuestion varName="heightin_hft">
+        <text>Feet (ft)</text>
+      </subQuestion>
+      <subQuestion varName="heightin_hin">
+        <text>Inches (in)</text>
+      </subQuestion>
+      <response varName="heightin">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>How much do you weigh?</text>
+      <response varName="weightlb">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Were you born a Canadian citizen?</text>
+      <response varName="imm">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>imm1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>imm2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>In what year did you first come to Canada to live?</text>
+      <response varName="imyr">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Have you graduated from high school (secondary school)?</text>
+      <response varName="hs">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>hs1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>hs2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Have you received any other education that can be counted towards a degree, certificate or diploma from an educaitonal institution?</text>
+      <response varName="ed">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>ed1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>ed2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>What is the highest degree, certificate or diploma you have obtained?</text>
+      <response varName="hdg">
+        <fixed>
+          <category>
+            <label>No post-secondary, degree, certificate or diploma</label>
+            <value>hdg1</value>
+          </category>
+          <category>
+            <label>Trade certificate or diploma from a vocational school or apprenticeship training</label>
+            <value>hdg2</value>
+          </category>
+          <category>
+            <label>Non-university certificate or diploma from a community college, CEGEP, school of nursing, etc.</label>
+            <value>hdg3</value>
+          </category>
+          <category>
+            <label>University certificate below bachelor’s level</label>
+            <value>hdg4</value>
+          </category>
+          <category>
+            <label>Bachelor’s degree</label>
+            <value>hdg5</value>
+          </category>
+          <category>
+            <label>University degree or certificate above bachelor’s level</label>
+            <value>hdg6</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+  </section>
+  <section id="52">
+    <sectionInfo>
+      <position>title</position>
+      <text>Smoking Habits</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <sectionInfo>
+      <position>before</position>
+      <text>These questions are about smoking.</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <question>
+      <text>In your lifetime, have you smoked a total of 100 or more cigarettes (about 4 packs)?</text>
+      <response varName="s100">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>s1001</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>s1002</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>At the present time, do you smoke cigarettes daily, occasionally, or not at all?</text>
+      <response varName="smk">
+        <fixed>
+          <category>
+            <label>Daily</label>
+            <value>smk1</value>
+          </category>
+          <category>
+            <label>Occasionally</label>
+            <value>smk2</value>
+          </category>
+          <category>
+            <label>Not at all</label>
+            <value>smk3</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How many cigarettes do you smoke each day now?</text>
+      <response varName="cigdayd">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Have you ever smoked cigarettes daily?</text>
+      <response varName="evdn">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>evdn1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>evdn2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How many cigarettes did you usually smoke each day?</text>
+      <response varName="cigdayf">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>When did you stop smoking daily?</text>
+      <response varName="stpn">
+        <fixed>
+          <category>
+            <label>Less than one year ago?</label>
+            <value>stpn1</value>
+          </category>
+          <category>
+            <label>1 year to less than 2 years ago?</label>
+            <value>stpn2</value>
+          </category>
+          <category>
+            <label>2 years to less than 3 years ago?</label>
+            <value>stpn3</value>
+          </category>
+          <category>
+            <label>3 or more years ago?</label>
+            <value>stpn4</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How many years ago was it?</text>
+      <response varName="stpny">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+  </section>
+  <section id="53">
+    <sectionInfo>
+      <position>title</position>
+      <text>Drinking Habits</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <sectionInfo>
+      <position>before</position>
+      <text>&lt;p&gt;
+	Now, some questions about your alcohol consumption. When we use the word 'drink' it means: &lt;/p&gt;
+
+	
+		One bottle or can of beer or a glass of draft
+	
+		One glass of wine or a wine cooler
+	
+		One drink or cocktail with 1 and a 1/2 onces of liquor</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <question>
+      <text>Have you ever had a drink?</text>
+      <response varName="dev">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>dev1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>dev2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>During the past 12 months, how often did you drink alcoholic beverages?</text>
+      <response varName="da12">
+        <fixed>
+          <category>
+            <label>Less than once a month</label>
+            <value>da121</value>
+          </category>
+          <category>
+            <label>Once a month</label>
+            <value>da122</value>
+          </category>
+          <category>
+            <label>2 to 3 times a month</label>
+            <value>da123</value>
+          </category>
+          <category>
+            <label>Once a week</label>
+            <value>da124</value>
+          </category>
+          <category>
+            <label>2 to 3 times a week</label>
+            <value>da125</value>
+          </category>
+          <category>
+            <label>4 to 6 times a week</label>
+            <value>da126</value>
+          </category>
+          <category>
+            <label>Every day</label>
+            <value>da127</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How often in the past 12 months have you had 5 or more drinks on any one ocassion?</text>
+      <response varName="db">
+        <fixed>
+          <category>
+            <label>Never</label>
+            <value>db1</value>
+          </category>
+          <category>
+            <label>Less than once a month</label>
+            <value>db2</value>
+          </category>
+          <category>
+            <label>Once a month</label>
+            <value>db3</value>
+          </category>
+          <category>
+            <label>2 to 3 times  amonth</label>
+            <value>db4</value>
+          </category>
+          <category>
+            <label>Once a week</label>
+            <value>db5</value>
+          </category>
+          <category>
+            <label>More than once a week</label>
+            <value>db6</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Thinking back over the past week, that is from {date(('l M d, Y'), (time() - (7* 24 * 60 * 60)))} to yesterday, did you have a drink of beer, wine, liquor or any other alcoholic beverage?</text>
+      <response varName="dany">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>dany1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>dany2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How many drinks did you have last week?</text>
+      <subQuestion varName="drk_drkm">
+        <text>Monday?</text>
+      </subQuestion>
+      <subQuestion varName="drk_drkt">
+        <text>Tuesday?</text>
+      </subQuestion>
+      <subQuestion varName="drk_drkw">
+        <text>Wednesday?</text>
+      </subQuestion>
+      <subQuestion varName="drk_drkr">
+        <text>Thursday?</text>
+      </subQuestion>
+      <subQuestion varName="drk_drkf">
+        <text>Friday</text>
+      </subQuestion>
+      <subQuestion varName="drk_drksa">
+        <text>Saturday?</text>
+      </subQuestion>
+      <subQuestion varName="drk_drksu">
+        <text>Sunday?</text>
+      </subQuestion>
+      <response varName="drk">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+  </section>
+  <section id="54">
+    <sectionInfo>
+      <position>title</position>
+      <text>Eating Habits</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <sectionInfo>
+      <position>before</position>
+      <text>The next questions are about the foods you usually eat or drink. Think about all the foods you eat, both meals and snacks, at home and away from home.</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <question>
+      <text>How often do you usually drink fruit juices such as orange, grapefruit or tomato?</text>
+      <response varName="jui">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Is that {jui} times per day, week, month or year?</text>
+      <response varName="juiu">
+        <fixed>
+          <category>
+            <label>Day</label>
+            <value>juid</value>
+          </category>
+          <category>
+            <label>Week</label>
+            <value>juiw</value>
+          </category>
+          <category>
+            <label>Month</label>
+            <value>juim</value>
+          </category>
+          <category>
+            <label>Year</label>
+            <value>juiy</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Not counting juice, how often do you usually eat fruit?</text>
+      <response varName="frt">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Is that {frt} times per day, week, month or year?</text>
+      <response varName="frtu">
+        <fixed>
+          <category>
+            <label>Day</label>
+            <value>frtd</value>
+          </category>
+          <category>
+            <label>Week</label>
+            <value>frtw</value>
+          </category>
+          <category>
+            <label>Month</label>
+            <value>frtm</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How often do you (usually) eat green salad?</text>
+      <response varName="sal">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Is that {sal} times a day, week, month or year?</text>
+      <response varName="salu">
+        <fixed>
+          <category>
+            <label>Day</label>
+            <value>sald</value>
+          </category>
+          <category>
+            <label>Week</label>
+            <value>salw</value>
+          </category>
+          <category>
+            <label>Month</label>
+            <value>salm</value>
+          </category>
+          <category>
+            <label>Year</label>
+            <value>saly</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How often do you usually eat potatoes, not including french fries, fried potatoes or potato chips?</text>
+      <response varName="pot">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Is that {pot} times per day, week, month or year?</text>
+      <response varName="potu">
+        <fixed>
+          <category>
+            <label>Day</label>
+            <value>potd</value>
+          </category>
+          <category>
+            <label>Week</label>
+            <value>potw</value>
+          </category>
+          <category>
+            <label>Month</label>
+            <value>potm</value>
+          </category>
+          <category>
+            <label>Year</label>
+            <value>poty</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>How often do you (usually) eat carrots?</text>
+      <response varName="car">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Is that {car} times per day, week, month or year?</text>
+      <response varName="caru">
+        <fixed>
+          <category>
+            <label>Day</label>
+            <value>card</value>
+          </category>
+          <category>
+            <label>Week</label>
+            <value>carw</value>
+          </category>
+          <category>
+            <label>Month</label>
+            <value>carm</value>
+          </category>
+          <category>
+            <label>Year</label>
+            <value>cary</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Not counting carrots, potatoes or salad, how many servings of other vegetables do you usually eat?</text>
+      <response varName="veg">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>Is that {veg} times per day, week, month or year?</text>
+      <response varName="vegu">
+        <fixed>
+          <category>
+            <label>Day</label>
+            <value>vegd</value>
+          </category>
+          <category>
+            <label>Week</label>
+            <value>vegw</value>
+          </category>
+          <category>
+            <label>Month</label>
+            <value>vegm</value>
+          </category>
+          <category>
+            <label>Year</label>
+            <value>vegy</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+  </section>
+  <section id="55">
+    <sectionInfo>
+      <position>title</position>
+      <text>Leisure Physical Activity</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <sectionInfo>
+      <position>before</position>
+      <text>This section is about physical activity. We are intersted only in physical activities not related to work, that is, leisure time activities.</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <question>
+      <text>Have you done any of the following in the past 3 months, that is {date(('M d, Y'), (time() - (90 * 24 * 60 *60)))} to yesterday?</text>
+      <response varName="lpa1">
+        <fixed>
+          <category>
+            <label>Walking for exercise</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa2">
+        <fixed>
+          <category>
+            <label>Gardening or yard work</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa3">
+        <fixed>
+          <category>
+            <label>Swimming</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa4">
+        <fixed>
+          <category>
+            <label>Bicycling</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa5">
+        <fixed>
+          <category>
+            <label>Popular or social dance</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa6">
+        <fixed>
+          <category>
+            <label>Home exercises</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa7">
+        <fixed>
+          <category>
+            <label>Ice hockey</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa8">
+        <fixed>
+          <category>
+            <label>Ice skating</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa9">
+        <fixed>
+          <category>
+            <label>In-line skating or rollerblading</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa10">
+        <fixed>
+          <category>
+            <label>Jogging or running</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa11">
+        <fixed>
+          <category>
+            <label>Golfing</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa12">
+        <fixed>
+          <category>
+            <label>Exercise class or aerobics</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa13">
+        <fixed>
+          <category>
+            <label>Downhill skiing or snowboarding</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa14">
+        <fixed>
+          <category>
+            <label>Bowling</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa15">
+        <fixed>
+          <category>
+            <label>Baseball or softball</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa16">
+        <fixed>
+          <category>
+            <label>Tennis</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa17">
+        <fixed>
+          <category>
+            <label>Weight-training</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa18">
+        <fixed>
+          <category>
+            <label>Fishing</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa19">
+        <fixed>
+          <category>
+            <label>Volleyball</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa20">
+        <fixed>
+          <category>
+            <label>Basketball</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa21">
+        <fixed>
+          <category>
+            <label>Soccer</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+      <response varName="lpa22">
+        <fixed>
+          <category>
+            <label>Other</label>
+            <value>1</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>In the past 3 months, how many times did you participate in each activity?</text>
+      <subQuestion varName="lpat_lpa1">
+        <text>Walking for exercise</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa2">
+        <text>Gardening or yard work</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa3">
+        <text>Swimming</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa4">
+        <text>Bicycling</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa5">
+        <text>Popular or social dance</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa6">
+        <text>Home exercises</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa7">
+        <text>Ice hockey</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa8">
+        <text>Ice skating</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa9">
+        <text>In-line skating or rollerblading</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa10">
+        <text>Jogging or running</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa11">
+        <text>Golfing</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa12">
+        <text>Exercise class or aerobics</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa13">
+        <text>Downhill skiing or snowboarding</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa14">
+        <text>Bowling</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa15">
+        <text>Baseball or softball</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa16">
+        <text>Tennis</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa17">
+        <text>Weight-training</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa18">
+        <text>Fishing</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa19">
+        <text>Volleyball</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa20">
+        <text>Basketball</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa21">
+        <text>Soccer</text>
+      </subQuestion>
+      <subQuestion varName="lpat_lpa22">
+        <text>Other</text>
+      </subQuestion>
+      <response varName="lpat">
+        <free>
+          <format>integer</format>
+          <length>10</length>
+          <label/>
+        </free>
+      </response>
+    </question>
+    <question>
+      <text>How much time did you spend on each ocassion?</text>
+      <subQuestion varName="lpam_lpa1">
+        <text>Walking for exercise</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa2">
+        <text>Gardening or yard work</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa3">
+        <text>Swimming</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa4">
+        <text>Bicycling</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa5">
+        <text>Popular or social dance</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa6">
+        <text>Home exercises</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa7">
+        <text>Ice hockey</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa8">
+        <text>Ice skating</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa9">
+        <text>In-line skating or rollerblading</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa10">
+        <text>Jogging or running</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa11">
+        <text>Golfing</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa12">
+        <text>Exercise class or aerobics</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa13">
+        <text>Downhill skiing or snowboarding</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa14">
+        <text>Bowling</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa15">
+        <text>Baseball or softball</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa16">
+        <text>Tennis</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa17">
+        <text>Weight-training</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa18">
+        <text>Fishing</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa19">
+        <text>Volleyball</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa20">
+        <text>Basketball</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa21">
+        <text>Soccer</text>
+      </subQuestion>
+      <subQuestion varName="lpam_lpa22">
+        <text>Other</text>
+      </subQuestion>
+      <response varName="lpam">
+        <fixed>
+          <category>
+            <label>1 to 15 min</label>
+            <value>lpa15</value>
+          </category>
+          <category>
+            <label>16 to 30 min</label>
+            <value>lpa30</value>
+          </category>
+          <category>
+            <label>31 to 60 min</label>
+            <value>lpa60</value>
+          </category>
+          <category>
+            <label>More than 60 min</label>
+            <value>lpa61</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+  </section>
+  <section id="56">
+    <sectionInfo>
+      <position>title</position>
+      <text>Chronic Conditions</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <sectionInfo>
+      <position>before</position>
+      <text>Lastly, this section is about certain chronic conditions which you may have. We are interested in "long term conditions" which are expected to last or have already lasted 6 months or more and that have been diagnosed by a health professional.</text>
+      <administration>self</administration>
+    </sectionInfo>
+    <question>
+      <text>Do you have diabetes?</text>
+      <response varName="diab">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>diab1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>diab2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Do you suffer from the effects of a stroke?</text>
+      <response varName="stk">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>stk1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>stk2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Do you have cancer?</text>
+      <response varName="can">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>can1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>can2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+    <question>
+      <text>Do you have heart disease?</text>
+      <response varName="hd">
+        <fixed>
+          <category>
+            <label>Yes</label>
+            <value>hd1</value>
+          </category>
+          <category>
+            <label>No</label>
+            <value>hd2</value>
+          </category>
+        </fixed>
+      </response>
+    </question>
+  </section>
+</questionnaire>
