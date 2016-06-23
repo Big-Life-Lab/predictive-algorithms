@@ -23,27 +23,28 @@ Please feel free to add calibration tables for different settings, or contact th
 **2) Algorithm development files** - The files contain code that was used to develop the algorithm or reference documents. For example, algorithms may contain the R databox code used to derive predictive risks from the original development data. This R code can facilitate development, validation or calibration studies.
 
 ## How to calculate risk using the reference documents
-There several approaches calculate risk using the provided documents:
+There several approaches to calculate risk using the provided documents:
 
 1. The predictive algorithm parameters within the PMML files can be transcribed into all common programming languages or even used within spreadsheet programs such as MS Excel or Google Sheets.
 
-2. PMML can also be used to within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [http://zementis.com/](http://zementis.com/).
+2. PMML can also be used within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [https://zementis.com](https://zementis.com).
 
 3. We have APIs to perform calculations, based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s eHealth Risk Assessment. [https://ehealth.heartandstroke.ca](https://ehealth.heartandstroke.ca) APIs provide additional outcome measures. For example, the MPoRT algorithm main outcome is 5-year risk, but also provided is life expectancy, survival to specified age, life expectancy lost from health behaviours (smoking, alcohol, diet and exercise).  Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
 4. Individual risk calculations can be performed at [https://projectbiglife.ca](https://projectbiglife.ca)
 
 ## Suggestions and collaboration
-We welcome suggestions to improve algorithm document or implementation of the risk tools. Feel free to open a new issue, pull request or fork.
+We welcome suggestions to improve algorithm documentation or implementation of the risk tools. Feel free to open a new issue, pull request or fork.
 
-We also welcome collaborations for future development, validation, calibration or application of the risk tools. Contact Doug Manuel [dmanuel@ohri.ca](mailto:dmanuel@ohri.ca)
+We also welcome collaborations for future development, validation, calibration or application of the risk tools. Contact Doug Manuel at [dmanuel@ohri.ca](mailto:dmanuel@ohri.ca)
 
 ## Algorithms
 
 **Mortality Population Risk Tool (MPoRT).** MPoRT predicts 5-year risk of dying (all-causes) based on health beahviours (smoking, physical activity, alcohol, diet), sociodemogrpahic information (age, sex, immigrant status, education, etc.) and intermediate risks (Body Mass Index, hypertension, chronic diseases). The model is currently  calibrated for Canada, 2013, with provisions to calibrate to other countries.
 
-Reference:
-In process.
+**Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.
+
+Reference: In process.
 
 **Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at ClinicalTrials.gov see:
 
