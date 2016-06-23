@@ -30,4 +30,4 @@ We also welcome collaborations for future development, validation, calibration o
 
 **Mortality Population Risk Tool (MPoRT).** MPoRT predicts 5-year risk of dying (all-causes) based on health beahviours (smoking, physical activity, alcohol, diet), sociodemogrpahic infomation (age, sex, immigrant status, education, etc.) and intermediate risks (Body Mass Index, hypertension, chronic diseases). The model is currently  calibratied for Canada, 2013, with provisions to calibrate to other countries.
 
-Reference: .....
+Reference:
