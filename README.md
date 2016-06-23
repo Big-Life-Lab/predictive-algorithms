@@ -17,7 +17,7 @@ There several approaches calculate risk using the provided documents:
 
 2. PMML can also be used to within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [https://zemetis.com](https://zemetis.com).
 
-3. We have an API to perform calculations, based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s eHealth Risk Assessment. [https://ehealth.heartandstroke.ca](https://ehealth.heartandstroke.ca) Please contact dmanuel@ohri.ca for more information about connecting to our API.
+3. We have APIs to perform calculations, based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s eHealth Risk Assessment. [https://ehealth.heartandstroke.ca](https://ehealth.heartandstroke.ca) APIs provide additional outcome measures. For example, the MPoRT algorithm main outcome is 5-year risk, but also provided is life expectancy, survival to specified age, life expectancy lost from health behaviours (smoking, alcohol, diet and exercise).  Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
 4. Individual risk calculations can be performed at [https://projectbiglife.ca](https://projectbiglife.ca)
 
@@ -30,6 +30,9 @@ We also welcome collaborations for future development, validation, calibration o
 
 **Mortality Population Risk Tool (MPoRT).** MPoRT predicts 5-year risk of dying (all-causes) based on health beahviours (smoking, physical activity, alcohol, diet), sociodemogrpahic infomation (age, sex, immigrant status, education, etc.) and intermediate risks (Body Mass Index, hypertension, chronic diseases). The model is currently  calibratied for Canada, 2013, with provisions to calibrate to other countries.
 
-**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published. see [https://ehealth.heartandstroke.ca]http://bmjopen.bmj.com/content/4/10/e006701.full. [https://clinicaltrials.gov/show/NCT02267447]Trial registration number ClinicalTrials.gov NCT02267447.
+**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. Trial registration number ClinicalTrials.gov NCT02267447. The protocol has been published. see:  http://bmjopen.bmj.com/content/4/10/e006701.full
 
+or,
+
+https://clinicaltrials.gov/show/NCT02267447
 
