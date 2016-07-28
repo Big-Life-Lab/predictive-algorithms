@@ -27,13 +27,13 @@ Please feel free to add calibration tables for different settings, or contact th
 ## How to calculate risk using the reference documents
 There several approaches to calculate risk using the provided documents:
 
-1. The predictive algorithm parameters within the PMML files can be transcribed into all common programming languages or even used within spreadsheet programs such as MS Excel or Google Sheets.
+**1)** The predictive algorithm parameters within the PMML files can be transcribed into all common programming languages or even used within spreadsheet programs such as MS Excel or Google Sheets.
 
-2. PMML can also be used within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [https://zementis.com](https://zementis.com).
+**2)** PMML can also be used within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [https://zementis.com](https://zementis.com).
 
-3. We have APIs to perform calculations, based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s eHealth Risk Assessment. [https://ehealth.heartandstroke.ca](https://ehealth.heartandstroke.ca) APIs provide additional outcome measures. For example, the MPoRT algorithm main outcome is 5-year risk, but also provided is life expectancy, survival to specified age, life expectancy lost from health behaviours (smoking, alcohol, diet and exercise).  Please contact dmanuel@ohri.ca for more information about connecting to our API.
+**3)** We have APIs to perform calculations, based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s eHealth Risk Assessment. [https://ehealth.heartandstroke.ca](https://ehealth.heartandstroke.ca) APIs provide additional outcome measures. For example, the MPoRT algorithm main outcome is 5-year risk, but also provided is life expectancy, survival to specified age, life expectancy lost from health behaviours (smoking, alcohol, diet and exercise).  Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
-4. Individual risk calculations can be performed at [https://projectbiglife.ca](https://projectbiglife.ca)
+**4)** Individual risk calculations can be performed at [https://projectbiglife.ca](https://projectbiglife.ca)
 
 ## Suggestions and collaboration
 We welcome suggestions to improve algorithm documentation or implementation of the risk tools. Feel free to open a new issue, pull request or fork.
