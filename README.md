@@ -25,7 +25,7 @@ There are two types of calibration data:
 
   Population distribution data are stored as CSV or JSON files and can be identified by the term "distribution" in the title of the data file.
 
-* **Population outcome** - Algorithms are calibrated to the population outcome, stratifyied by age and sex. Calibration ensures that the predictive risk is equal to the observed risk in the application setting. To perform calibration, the risk algorithm is applied to a population-based sample to generate predictive estimates of population risk. The predicted population risk is compared to the observed population risk, with a corresponding adjustment made to the baseline hazard (for example see HAdj in Table S7 for reference []).
+* **Population outcome** - Algorithms are calibrated to the population outcome, stratifyied by age and sex. Calibration ensures that the predictive risk is equal to the observed risk in the application setting. To perform calibration, the risk algorithm is applied to a population-based sample to generate predictive estimates of population risk. The predicted population risk is compared to the observed population risk, with a corresponding adjustment made to the baseline hazard (for example see H<sub>Adj</sub> in Table S7 for reference []).
 
   Population outcome data include age and sex-stratefied risk of outcome, but may also include additional subgroups.
 
