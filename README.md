@@ -16,13 +16,26 @@ Individual algorithms may have additional reference files. These files are descr
 
 Examples of additional files include:
 
-**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference 1 and 2] For the most part, calibration adjusts age and sex-specific risk estimates based on the population distribution of predictors in different settings (i.e. countries) and rate of the risk outcome in a population. Calibration data are tables stored as CSV or JSON files.
+**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference 1 and 2]
 
-Please feel free to add calibration tables for different settings, or contact the algorithm development teams if you are interested in calibrating algorithms for your setting.
+There are two types of calibration data:
+* **Population distribution of the predictors** - All algorithms within this repository are developed by centring predictive risks within the development data. Following, the algorithms are calibrated by centring all predictors in the new application data. Centring is performed using data that describes the distribution of the predictors in the application population. This means that a a person with the average (mean) predictor exposure has a hazard of 1 for that predictor. A theorectical person with the average (mean) exposure for all predictors would have a predictive risk that is equal to the observed (mean) risk for the entire population.
+
+  Population distribution data include predictive risks for percentile of risk exposure. Calibration data may also include distibution of predictors across age, sex or other subgroups.
+
+  Population distribution data are stored as CSV or JSON files and can be identified by the term "distribution" in the title of the data file.
+
+* **Population outcome** - Algorithms are calibrated to the population outcome, stratifyied by age and sex. Calibration ensures that the predictive risk is equal to the observed risk in the application setting. To perform calibration, the risk algorithm is applied to a population-based sample to generate predictive estimates of population risk. The predicted population risk is compared to the observed population risk, with a corresponding adjustment made to the baseline hazard (for example see HAdj in Table S7 for reference []).
+
+  Population outcome data include age and sex-stratefied risk of outcome, but may also include additional subgroups.
+
+  Please feel free to add calibration tables for different settings, or contact the algorithm development teams if you are interested in calibrating algorithms for your setting.
 
 **2) Algorithm development files** - The files contain code that was used to develop the algorithm or reference documents. For example, algorithms may contain the R databox code used to derive predictive risks from the original development data. This R code can facilitate development, validation or calibration studies.
 
-**3) Algorithm testing data** - These data can be use to test whether a scoring engine is performing correct calculations. Testing data are store as CSV or JSON files. Each row in a CSV file contains values for each predictor in an algorithm, along with the score or algorithm outcome. The data can be used for other purposes, such as creating or testing new algorithm development.
+**3) Algorithm testing data** - These data can be use to test whether a scoring engine is performing correct calculations.  Each row in a CSV file contains values for each predictor in an algorithm, along with the score or algorithm outcome. The data can be used for other purposes, such as creating or testing new algorithm development. Unless specifically identifyied, the algorthim testing data should not be used for calbiration because these data are not representitive of an actual application population.
+
+Testing data are stored as CSV or JSON files and can be identified by the term "test" in the title of the data file.
 
 ## How to calculate risk using the reference documents
 There several approaches to calculate risk using the provided documents:
