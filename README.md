@@ -18,7 +18,7 @@ Examples of additional files include:
 
 **1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference 1 and 2] For the most part, calibration adjusts age and sex-specific risk estimates based on the population distribution of predictors in different settings (i.e. countries) and rate of the risk outcome in a population. Calibration data are tables stored as CSV or JSON files.
 
-Please feel free to add calibration tables for different settings, or contact the algorithm development teams if you have an interested in calibrating algorithms for your setting.
+Please feel free to add calibration tables for different settings, or contact the algorithm development teams if you are interested in calibrating algorithms for your setting.
 
 **2) Algorithm development files** - The files contain code that was used to develop the algorithm or reference documents. For example, algorithms may contain the R databox code used to derive predictive risks from the original development data. This R code can facilitate development, validation or calibration studies.
 
