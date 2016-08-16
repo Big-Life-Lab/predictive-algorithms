@@ -16,7 +16,7 @@ Individual algorithms may have additional reference files. These files are descr
 
 Examples of additional files include:
 
-**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[[1]](#ref1)
+**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[1](#ref1)
 
 There are two types of calibration data:
 * **Population distribution of the predictors** - All algorithms within this repository are developed by centring predictive risks within the development data. Following, the algorithms are calibrated by centring all predictors in the new application data. Centring is performed using data that describes the distribution of the predictors in the application population. This means that a a person with the average (mean) predictor exposure has a hazard of 1 for that predictor. A theorectical person with the average (mean) exposure for all predictors would have a predictive risk that is equal to the observed (mean) risk for the entire population.
