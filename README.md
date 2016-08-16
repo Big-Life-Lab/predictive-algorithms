@@ -16,7 +16,7 @@ Individual algorithms may have additional reference files. These files are descr
 
 Examples of additional files include:
 
-**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference 1 and 2]
+**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[see reference [1](#ref1).
 
 There are two types of calibration data:
 * **Population distribution of the predictors** - All algorithms within this repository are developed by centring predictive risks within the development data. Following, the algorithms are calibrated by centring all predictors in the new application data. Centring is performed using data that describes the distribution of the predictors in the application population. This means that a a person with the average (mean) predictor exposure has a hazard of 1 for that predictor. A theorectical person with the average (mean) exposure for all predictors would have a predictive risk that is equal to the observed (mean) risk for the entire population.
@@ -57,12 +57,10 @@ We also welcome collaborations for future development, validation, calibration o
 
 **Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.
 
-Reference: In process.
+<a name="ref1">Reference:</a> Manuel DG, Perez R, Sanmartin C, Taljaard M, Hennessy D, Wilson K, et al. (2016) **Measuring Burden of Unhealthy Behaviours Using a Multivariable Predictive Approach: Life Expectancy Lost in Canada Attributable to Smoking, Alcohol, Physical Inactivity, and Diet**. PLoS Med 13(8): e1002082. [doi:10.1371/journal.pmed.1002082](http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002082)
 
 **Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at ClinicalTrials.gov see:
 
-[http://bmjopen.bmj.com/content/4/10/e006701.full] (http://bmjopen.bmj.com/content/4/10/e006701.full)
-
+[http://bmjopen.bmj.com/content/4/10/e006701.full](http://bmjopen.bmj.com/content/4/10/e006701.full)
 or,
-
-[https://clinicaltrials.gov/show/NCT02267447] (https://clinicaltrials.gov/show/NCT02267447)
+[https://clinicaltrials.gov/show/NCT02267447](https://clinicaltrials.gov/show/NCT02267447)
