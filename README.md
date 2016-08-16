@@ -58,7 +58,7 @@ We also welcome collaborations for future development, validation, calibration o
 **Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.[[1]](#ref1)
 
 
-**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference [[2]](#ref2).
+**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[2]](#ref2)
 
 ## References
 
