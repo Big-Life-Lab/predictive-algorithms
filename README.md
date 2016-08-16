@@ -16,7 +16,7 @@ Individual algorithms may have additional reference files. These files are descr
 
 Examples of additional files include:
 
-**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[1](#ref1)
+**1) Calibration data** - These data ensure algorithms provide well-calibrated estimates in different settings.[[1]](#ref1)
 
 There are two types of calibration data:
 * **Population distribution of the predictors** - All algorithms within this repository are developed by centring predictive risks within the development data. Following, the algorithms are calibrated by centring all predictors in the new application data. Centring is performed using data that describes the distribution of the predictors in the application population. This means that a a person with the average (mean) predictor exposure has a hazard of 1 for that predictor. A theorectical person with the average (mean) exposure for all predictors would have a predictive risk that is equal to the observed (mean) risk for the entire population.
@@ -25,7 +25,7 @@ There are two types of calibration data:
 
   Population distribution data are stored as CSV or JSON files and can be identified by the term "distribution" in the title of the data file.
 
-* **Population outcome** - Algorithms are calibrated to the population outcome, stratifyied by age and sex. Calibration ensures that the predictive risk is equal to the observed risk in the application setting. To perform calibration, the risk algorithm is applied to a population-based sample to generate predictive estimates of population risk. The predicted population risk is compared to the observed population risk, with a corresponding adjustment made to the baseline hazard (for example see H<sub>Adj</sub> in [Table S7](http://journals.plos.org/plosmedicine/article/asset?unique&id=info:doi/10.1371/journal.pmed.1002082.s012) of reference [1]).
+* **Population outcome** - Algorithms are calibrated to the population outcome, stratifyied by age and sex. Calibration ensures that the predictive risk is equal to the observed risk in the application setting. To perform calibration, the risk algorithm is applied to a population-based sample to generate predictive estimates of population risk. The predicted population risk is compared to the observed population risk, with a corresponding adjustment made to the baseline hazard (for example see H<sub>Adj</sub> in [Table S7](http://journals.plos.org/plosmedicine/article/asset?unique&id=info:doi/10.1371/journal.pmed.1002082.s012) of reference [[1]](#ref1)).
 
   Population outcome data include age and sex-stratefied risk of outcome, but may also include additional subgroups.
 
