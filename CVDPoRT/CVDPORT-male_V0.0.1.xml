@@ -1,5 +1,5 @@
 <PMML version="4.2" xmlns="http://www.dmg.org/PMML-4_2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_2 http://www.dmg.org/v4-2/pmml-4-2.xsd">
- <Header copyright="Copyright (c) 2016 mtuna" description="CVDPoRT male PMML Model">
+ <Header copyright="Copyright (c) 2016" description="CVDPoRT male PMML Model">
   <Extension name="user" value="mtuna" extender="COXPH"/>
   <Application name="COXPH" version="1.4"/>
   <Timestamp>2016-05-17 11:10:34</Timestamp>
