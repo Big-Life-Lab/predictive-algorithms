@@ -57,8 +57,11 @@ We also welcome collaborations for future development, validation, calibration o
 
 **Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.[[1]](#ref1)
 
-
 **Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[2]](#ref2)
+
+**Risk Evaluation for Support: Predictions for Elder-life in the Community Tool (RESPECT)** RESPECT is currently under development. The protocol has been published: Trial registration number: NCT02779309 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[3]](#ref3) 
+
+RESPECT is an end-of-life predictive algorithm developed using an open cohort study design. Dervivation data arethe Resident Assessment Instrument for Home Care (RAI-HC) data in Ontario, Canada, from 1 January 2007 to 31 December 2013. The derivation cohort will consist of 437 000 older adults who had an RAI-HC assessment between 1 January 2007 and 31 December 2012. A split sample validation cohort will include 122 000 older adults with an RAI-HC assessment between 1 January and 31 December 2013. There are approximately 245 000 deaths in the combined development and validation cohorts. 
 
 ## References
 
@@ -66,3 +69,4 @@ We also welcome collaborations for future development, validation, calibration o
 
 <a name="ref2">2)</a> Taljaard M, Tuna M, Bennett C, Perez R, Rosella L, Tu JV, et al. **Cardiovascular Disease Population Risk Tool (CVDPoRT): predictive algorithm for assessing CVD risk in the community setting. A study protocol.** [BMJ open. 2014;4(10):e006701.](http://bmjopen.bmj.com/content/4/10/e006701.full)
 
+<a name="ref3">3)</a> Hsu AT, Manuel DG, Taljaard M,Chalifoux M, Bennett C,Costa AP, Bronskill S, Kobewka D,Tanuseputro P. **Algorithm for predicting death among older adults in the home care setting: study protocol for the Risk Evaluation for Support: Predictions for Elder-life in the Community Tool (RESPECT)** http://bmjopen.bmj.com/content/6/12/e013666.full
