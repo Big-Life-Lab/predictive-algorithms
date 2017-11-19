@@ -49,9 +49,7 @@ There several approaches to calculate risk using the provided documents:
 **3)** We have APIs to perform calculations based on the PMML files within this repository. For example, see Heart and Stroke Foundation’s [eHealth Risk Assessment](https://ehealth.heartandstroke.ca). APIs provide additional outcome measures and features. For example, the MPoRT algorithm main outcome is 1-year risk, but also provided are:
 
 * life expectancy;
-
 * survival to specified age ("Will you live to see it?);
-
 * health age (users age compared to a reference population).
 
 All health outcome measures can be estimated considering the effect of:
