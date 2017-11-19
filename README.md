@@ -1,4 +1,4 @@
-# Predictive algorithms reference documents
+# Predictive algorithm reference documents
 
 ## Two documents describe the algorithms
 
