@@ -64,7 +64,9 @@ Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
 ## Suggestions and collaboration
 
-We welcome suggestions to improve algorithm documentation or implementation of the risk tools. Feel free to open a new issue, pull request or fork.
+We welcome suggestions to improve algorithm documentation or implementation of the risk tools. Feel free to open a new issue, pull request.
+
+However, please note that normal copyright law applies and prevents the further copying, publication or distribution of our work without our permission. We’d be happy to collaborate and allow your use of our algorithm for academic research projects by not-for-profit entities, but if you’re a for-profit or otherwise wanting to reproduce all or part of our work for commercial purposes, please seek our permission first. 
 
 We also welcome collaborations for future development, validation, calibration or application of the risk tools. Contact Doug Manuel at [dmanuel@ohri.ca](mailto:dmanuel@ohri.ca)
 
