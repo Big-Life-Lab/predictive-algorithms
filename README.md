@@ -62,7 +62,7 @@ Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
 **4)** Individual risk calculations can be performed at [https://projectbiglife.ca](https://projectbiglife.ca).
 
-## Suggestions and collaboration
+## Suggestions, collaboration and copyright
 
 We welcome suggestions to improve algorithm documentation or implementation of the risk tools. Feel free to open a new issue, pull request.
 
