@@ -1,0 +1,2 @@
+AlgorithmName,GenderSpecific,BaselineSurvival,RegressionType,TimeMetric,MaximumTime
+RESPECT,false,0.921096526,CoxRegression,days,180

@@ -1,0 +1,561 @@
+<?xml version="1.0"?>
+<PMML>
+  <Header description="">
+    <Extension ModelName="Unknown" Version="Unknown"/>
+  </Header>
+  <GeneralRegressionModel baselineHazard="0.921096526" modelType="CoxRegression">
+    <ParameterList>
+      <Parameter name="p0" label="A1_cat7_1_c" referencePoint=""/>
+      <Parameter name="p1" label="A1_cat7_2_c" referencePoint=""/>
+      <Parameter name="p2" label="A1_cat7_3_c" referencePoint=""/>
+      <Parameter name="p3" label="A1_cat7_4_c" referencePoint=""/>
+      <Parameter name="p4" label="A1_cat7_5_c" referencePoint=""/>
+      <Parameter name="p5" label="A1_cat7_6_c" referencePoint=""/>
+      <Parameter name="p6" label="A2_cat5_1_c" referencePoint=""/>
+      <Parameter name="p7" label="A2_cat5_2_c" referencePoint=""/>
+      <Parameter name="p8" label="A2_cat5_3_c" referencePoint=""/>
+      <Parameter name="p9" label="A2_cat5_4_c" referencePoint=""/>
+      <Parameter name="p10" label="ADL_cat7_1_c" referencePoint=""/>
+      <Parameter name="p11" label="ADL_cat7_2_c" referencePoint=""/>
+      <Parameter name="p12" label="ADL_cat7_3_c" referencePoint=""/>
+      <Parameter name="p13" label="ADL_cat7_4_c" referencePoint=""/>
+      <Parameter name="p14" label="ADL_cat7_5_c" referencePoint=""/>
+      <Parameter name="p15" label="ADL_cat7_6_c" referencePoint=""/>
+      <Parameter name="p16" label="B2B_cat2_1_c" referencePoint=""/>
+      <Parameter name="p17" label="BB6_cat5_1_c" referencePoint=""/>
+      <Parameter name="p18" label="BB6_cat5_2_c" referencePoint=""/>
+      <Parameter name="p19" label="BB6_cat5_3_c" referencePoint=""/>
+      <Parameter name="p20" label="BB6_cat5_4_c" referencePoint=""/>
+      <Parameter name="p21" label="Cancer_cat6_1_c" referencePoint=""/>
+      <Parameter name="p22" label="Cancer_cat6_2_c" referencePoint=""/>
+      <Parameter name="p23" label="Cancer_cat6_3_c" referencePoint=""/>
+      <Parameter name="p24" label="Cancer_cat6_4_c" referencePoint=""/>
+      <Parameter name="p25" label="Cancer_cat6_5_c" referencePoint=""/>
+      <Parameter name="p26" label="H3_cat2_1_c" referencePoint=""/>
+      <Parameter name="p27" label="IADL_cat7_1_c" referencePoint=""/>
+      <Parameter name="p28" label="IADL_cat7_2_c" referencePoint=""/>
+      <Parameter name="p29" label="IADL_cat7_3_c" referencePoint=""/>
+      <Parameter name="p30" label="IADL_cat7_4_c" referencePoint=""/>
+      <Parameter name="p31" label="IADL_cat7_5_c" referencePoint=""/>
+      <Parameter name="p32" label="IADL_cat7_6_c" referencePoint=""/>
+      <Parameter name="p33" label="J1A_cat2_1_c" referencePoint=""/>
+      <Parameter name="p34" label="J1B_cat2_1_c" referencePoint=""/>
+      <Parameter name="p35" label="J1C_cat2_1_c" referencePoint=""/>
+      <Parameter name="p36" label="J1D_cat2_1_c" referencePoint=""/>
+      <Parameter name="p37" label="J1DE_cat2_1_c" referencePoint=""/>
+      <Parameter name="p38" label="J1K_cat2_1_c" referencePoint=""/>
+      <Parameter name="p39" label="J1L_cat2_1_c" referencePoint=""/>
+      <Parameter name="p40" label="K2E_cat2_1_c" referencePoint=""/>
+      <Parameter name="p41" label="K3D_cat2_1_c" referencePoint=""/>
+      <Parameter name="p42" label="K3E_cat2_1_c" referencePoint=""/>
+      <Parameter name="p43" label="K8E_cat2_1_c" referencePoint=""/>
+      <Parameter name="p44" label="L1A_cat2_1_c" referencePoint=""/>
+      <Parameter name="p45" label="L2B_cat2_1_c" referencePoint=""/>
+      <Parameter name="p46" label="L2C_cat2_1_c" referencePoint=""/>
+      <Parameter name="p47" label="Oxygen_cat6_1_c" referencePoint=""/>
+      <Parameter name="p48" label="Oxygen_cat6_2_c" referencePoint=""/>
+      <Parameter name="p49" label="Oxygen_cat6_3_c" referencePoint=""/>
+      <Parameter name="p50" label="Oxygen_cat6_4_c" referencePoint=""/>
+      <Parameter name="p51" label="Oxygen_cat6_5_c" referencePoint=""/>
+      <Parameter name="p52" label="P4A_cat4_1_c" referencePoint=""/>
+      <Parameter name="p53" label="P4A_cat4_2_c" referencePoint=""/>
+      <Parameter name="p54" label="P4A_cat4_3_c" referencePoint=""/>
+      <Parameter name="p55" label="P4B_cat4_1_c" referencePoint=""/>
+      <Parameter name="p56" label="P4B_cat4_2_c" referencePoint=""/>
+      <Parameter name="p57" label="P4B_cat4_3_c" referencePoint=""/>
+      <Parameter name="p58" label="Renal_cat4_1_c" referencePoint=""/>
+      <Parameter name="p59" label="Renal_cat4_2_c" referencePoint=""/>
+      <Parameter name="p60" label="Renal_cat4_3_c" referencePoint=""/>
+      <Parameter name="p61" label="Sex_cat2_1_c" referencePoint=""/>
+      <Parameter name="p62" label="Age_rcs1_c" referencePoint=""/>
+      <Parameter name="p63" label="Age_rcs2_c" referencePoint=""/>
+      <Parameter name="p64" label="Age_rcs3_c" referencePoint=""/>
+      <Parameter name="p65" label="Age_rcs4_c" referencePoint=""/>
+    </ParameterList>
+    <CovariateList>
+      <Predictor name="A1_cat7_1_c"/>
+      <Predictor name="A1_cat7_2_c"/>
+      <Predictor name="A1_cat7_3_c"/>
+      <Predictor name="A1_cat7_4_c"/>
+      <Predictor name="A1_cat7_5_c"/>
+      <Predictor name="A1_cat7_6_c"/>
+      <Predictor name="A2_cat5_1_c"/>
+      <Predictor name="A2_cat5_2_c"/>
+      <Predictor name="A2_cat5_3_c"/>
+      <Predictor name="A2_cat5_4_c"/>
+      <Predictor name="ADL_cat7_1_c"/>
+      <Predictor name="ADL_cat7_2_c"/>
+      <Predictor name="ADL_cat7_3_c"/>
+      <Predictor name="ADL_cat7_4_c"/>
+      <Predictor name="ADL_cat7_5_c"/>
+      <Predictor name="ADL_cat7_6_c"/>
+      <Predictor name="B2B_cat2_1_c"/>
+      <Predictor name="BB6_cat5_1_c"/>
+      <Predictor name="BB6_cat5_2_c"/>
+      <Predictor name="BB6_cat5_3_c"/>
+      <Predictor name="BB6_cat5_4_c"/>
+      <Predictor name="Cancer_cat6_1_c"/>
+      <Predictor name="Cancer_cat6_2_c"/>
+      <Predictor name="Cancer_cat6_3_c"/>
+      <Predictor name="Cancer_cat6_4_c"/>
+      <Predictor name="Cancer_cat6_5_c"/>
+      <Predictor name="H3_cat2_1_c"/>
+      <Predictor name="IADL_cat7_1_c"/>
+      <Predictor name="IADL_cat7_2_c"/>
+      <Predictor name="IADL_cat7_3_c"/>
+      <Predictor name="IADL_cat7_4_c"/>
+      <Predictor name="IADL_cat7_5_c"/>
+      <Predictor name="IADL_cat7_6_c"/>
+      <Predictor name="J1A_cat2_1_c"/>
+      <Predictor name="J1B_cat2_1_c"/>
+      <Predictor name="J1C_cat2_1_c"/>
+      <Predictor name="J1D_cat2_1_c"/>
+      <Predictor name="J1DE_cat2_1_c"/>
+      <Predictor name="J1K_cat2_1_c"/>
+      <Predictor name="J1L_cat2_1_c"/>
+      <Predictor name="K2E_cat2_1_c"/>
+      <Predictor name="K3D_cat2_1_c"/>
+      <Predictor name="K3E_cat2_1_c"/>
+      <Predictor name="K8E_cat2_1_c"/>
+      <Predictor name="L1A_cat2_1_c"/>
+      <Predictor name="L2B_cat2_1_c"/>
+      <Predictor name="L2C_cat2_1_c"/>
+      <Predictor name="Oxygen_cat6_1_c"/>
+      <Predictor name="Oxygen_cat6_2_c"/>
+      <Predictor name="Oxygen_cat6_3_c"/>
+      <Predictor name="Oxygen_cat6_4_c"/>
+      <Predictor name="Oxygen_cat6_5_c"/>
+      <Predictor name="P4A_cat4_1_c"/>
+      <Predictor name="P4A_cat4_2_c"/>
+      <Predictor name="P4A_cat4_3_c"/>
+      <Predictor name="P4B_cat4_1_c"/>
+      <Predictor name="P4B_cat4_2_c"/>
+      <Predictor name="P4B_cat4_3_c"/>
+      <Predictor name="Renal_cat4_1_c"/>
+      <Predictor name="Renal_cat4_2_c"/>
+      <Predictor name="Renal_cat4_3_c"/>
+      <Predictor name="Sex_cat2_1_c"/>
+      <Predictor name="Age_rcs1_c"/>
+      <Predictor name="Age_rcs2_c"/>
+      <Predictor name="Age_rcs3_c"/>
+      <Predictor name="Age_rcs4_c"/>
+    </CovariateList>
+    <ParamMatrix>
+      <PCell parameterName="p0" beta="0.011221686"/>
+      <PCell parameterName="p1" beta="-0.008461137"/>
+      <PCell parameterName="p2" beta="-0.027472382"/>
+      <PCell parameterName="p3" beta="-0.119290669"/>
+      <PCell parameterName="p4" beta="-0.134421662"/>
+      <PCell parameterName="p5" beta="-0.130522246"/>
+      <PCell parameterName="p6" beta="-0.094325877"/>
+      <PCell parameterName="p7" beta="-0.279078133"/>
+      <PCell parameterName="p8" beta="0.12374996"/>
+      <PCell parameterName="p9" beta="-0.049508924"/>
+      <PCell parameterName="p10" beta="0.114376725"/>
+      <PCell parameterName="p11" beta="0.270531305"/>
+      <PCell parameterName="p12" beta="0.363987657"/>
+      <PCell parameterName="p13" beta="0.687408565"/>
+      <PCell parameterName="p14" beta="0.895189374"/>
+      <PCell parameterName="p15" beta="1.288555722"/>
+      <PCell parameterName="p16" beta="0.083725427"/>
+      <PCell parameterName="p17" beta="0.061620104"/>
+      <PCell parameterName="p18" beta="0.030168308"/>
+      <PCell parameterName="p19" beta="-0.012606079"/>
+      <PCell parameterName="p20" beta="0.101250157"/>
+      <PCell parameterName="p21" beta="1.178246656"/>
+      <PCell parameterName="p22" beta="0.702494555"/>
+      <PCell parameterName="p23" beta="0.775620399"/>
+      <PCell parameterName="p24" beta="1.33086259"/>
+      <PCell parameterName="p25" beta="1.21225015"/>
+      <PCell parameterName="p26" beta="0.339939294"/>
+      <PCell parameterName="p27" beta="0.024146042"/>
+      <PCell parameterName="p28" beta="0.180426428"/>
+      <PCell parameterName="p29" beta="0.248088057"/>
+      <PCell parameterName="p30" beta="0.416117902"/>
+      <PCell parameterName="p31" beta="0.54136652"/>
+      <PCell parameterName="p32" beta="0.702610582"/>
+      <PCell parameterName="p33" beta="-0.134093482"/>
+      <PCell parameterName="p34" beta="0.295868144"/>
+      <PCell parameterName="p35" beta="0.04903443"/>
+      <PCell parameterName="p36" beta="-0.114757415"/>
+      <PCell parameterName="p37" beta="-0.133562512"/>
+      <PCell parameterName="p38" beta="-0.63050939"/>
+      <PCell parameterName="p39" beta="-0.266781403"/>
+      <PCell parameterName="p40" beta="0.313808486"/>
+      <PCell parameterName="p41" beta="0.122533085"/>
+      <PCell parameterName="p42" beta="0.284847007"/>
+      <PCell parameterName="p43" beta="1.161422168"/>
+      <PCell parameterName="p44" beta="0.445792322"/>
+      <PCell parameterName="p45" beta="0.380149271"/>
+      <PCell parameterName="p46" beta="0.217546312"/>
+      <PCell parameterName="p47" beta="0.199724652"/>
+      <PCell parameterName="p48" beta="0.461264253"/>
+      <PCell parameterName="p49" beta="0.078864849"/>
+      <PCell parameterName="p50" beta="0.094614237"/>
+      <PCell parameterName="p51" beta="0.42030037"/>
+      <PCell parameterName="p52" beta="0.120669033"/>
+      <PCell parameterName="p53" beta="0.252758819"/>
+      <PCell parameterName="p54" beta="0.318971827"/>
+      <PCell parameterName="p55" beta="0.092630218"/>
+      <PCell parameterName="p56" beta="0.123041633"/>
+      <PCell parameterName="p57" beta="0.132951168"/>
+      <PCell parameterName="p58" beta="0.261972619"/>
+      <PCell parameterName="p59" beta="0.346500311"/>
+      <PCell parameterName="p60" beta="0.492798105"/>
+      <PCell parameterName="p61" beta="0.344294281"/>
+      <PCell parameterName="p62" beta="0.013609757"/>
+      <PCell parameterName="p63" beta="-0.010015553"/>
+      <PCell parameterName="p64" beta="0.158316253"/>
+      <PCell parameterName="p65" beta="-0.217247958"/>
+    </ParamMatrix>
+    <MiningSchema>
+      <MiningField name="unknown" usageType="predicted"/>
+      <MiningField name="A1_cat7_1_c" usageType="active"/>
+      <MiningField name="A1_cat7_2_c" usageType="active"/>
+      <MiningField name="A1_cat7_3_c" usageType="active"/>
+      <MiningField name="A1_cat7_4_c" usageType="active"/>
+      <MiningField name="A1_cat7_5_c" usageType="active"/>
+      <MiningField name="A1_cat7_6_c" usageType="active"/>
+      <MiningField name="A2_cat5_1_c" usageType="active"/>
+      <MiningField name="A2_cat5_2_c" usageType="active"/>
+      <MiningField name="A2_cat5_3_c" usageType="active"/>
+      <MiningField name="A2_cat5_4_c" usageType="active"/>
+      <MiningField name="ADL_cat7_1_c" usageType="active"/>
+      <MiningField name="ADL_cat7_2_c" usageType="active"/>
+      <MiningField name="ADL_cat7_3_c" usageType="active"/>
+      <MiningField name="ADL_cat7_4_c" usageType="active"/>
+      <MiningField name="ADL_cat7_5_c" usageType="active"/>
+      <MiningField name="ADL_cat7_6_c" usageType="active"/>
+      <MiningField name="B2B_cat2_1_c" usageType="active"/>
+      <MiningField name="BB6_cat5_1_c" usageType="active"/>
+      <MiningField name="BB6_cat5_2_c" usageType="active"/>
+      <MiningField name="BB6_cat5_3_c" usageType="active"/>
+      <MiningField name="BB6_cat5_4_c" usageType="active"/>
+      <MiningField name="Cancer_cat6_1_c" usageType="active"/>
+      <MiningField name="Cancer_cat6_2_c" usageType="active"/>
+      <MiningField name="Cancer_cat6_3_c" usageType="active"/>
+      <MiningField name="Cancer_cat6_4_c" usageType="active"/>
+      <MiningField name="Cancer_cat6_5_c" usageType="active"/>
+      <MiningField name="H3_cat2_1_c" usageType="active"/>
+      <MiningField name="IADL_cat7_1_c" usageType="active"/>
+      <MiningField name="IADL_cat7_2_c" usageType="active"/>
+      <MiningField name="IADL_cat7_3_c" usageType="active"/>
+      <MiningField name="IADL_cat7_4_c" usageType="active"/>
+      <MiningField name="IADL_cat7_5_c" usageType="active"/>
+      <MiningField name="IADL_cat7_6_c" usageType="active"/>
+      <MiningField name="J1A_cat2_1_c" usageType="active"/>
+      <MiningField name="J1B_cat2_1_c" usageType="active"/>
+      <MiningField name="J1C_cat2_1_c" usageType="active"/>
+      <MiningField name="J1D_cat2_1_c" usageType="active"/>
+      <MiningField name="J1DE_cat2_1_c" usageType="active"/>
+      <MiningField name="J1K_cat2_1_c" usageType="active"/>
+      <MiningField name="J1L_cat2_1_c" usageType="active"/>
+      <MiningField name="K2E_cat2_1_c" usageType="active"/>
+      <MiningField name="K3D_cat2_1_c" usageType="active"/>
+      <MiningField name="K3E_cat2_1_c" usageType="active"/>
+      <MiningField name="K8E_cat2_1_c" usageType="active"/>
+      <MiningField name="L1A_cat2_1_c" usageType="active"/>
+      <MiningField name="L2B_cat2_1_c" usageType="active"/>
+      <MiningField name="L2C_cat2_1_c" usageType="active"/>
+      <MiningField name="Oxygen_cat6_1_c" usageType="active"/>
+      <MiningField name="Oxygen_cat6_2_c" usageType="active"/>
+      <MiningField name="Oxygen_cat6_3_c" usageType="active"/>
+      <MiningField name="Oxygen_cat6_4_c" usageType="active"/>
+      <MiningField name="Oxygen_cat6_5_c" usageType="active"/>
+      <MiningField name="P4A_cat4_1_c" usageType="active"/>
+      <MiningField name="P4A_cat4_2_c" usageType="active"/>
+      <MiningField name="P4A_cat4_3_c" usageType="active"/>
+      <MiningField name="P4B_cat4_1_c" usageType="active"/>
+      <MiningField name="P4B_cat4_2_c" usageType="active"/>
+      <MiningField name="P4B_cat4_3_c" usageType="active"/>
+      <MiningField name="Renal_cat4_1_c" usageType="active"/>
+      <MiningField name="Renal_cat4_2_c" usageType="active"/>
+      <MiningField name="Renal_cat4_3_c" usageType="active"/>
+      <MiningField name="Sex_cat2_1_c" usageType="active"/>
+      <MiningField name="Age_rcs1_c" usageType="active"/>
+      <MiningField name="Age_rcs2_c" usageType="active"/>
+      <MiningField name="Age_rcs3_c" usageType="active"/>
+      <MiningField name="Age_rcs4_c" usageType="active"/>
+    </MiningSchema>
+  </GeneralRegressionModel>
+  <CustomPMML>
+    <RestrictedCubicSpline>
+      <PCell parameterName="p62, p63, p64, p65" knotLocations="58, 75, 82, 87, 94"/>
+    </RestrictedCubicSpline>
+  </CustomPMML>
+  <LocalTransformations/>
+  <DataDictionary numberOfFields="67">
+    <DataField name="A1_cat7_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A1_cat7_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A1_cat7_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A1_cat7_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A1_cat7_5_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A1_cat7_6_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A2_cat5_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A2_cat5_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A2_cat5_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="A2_cat5_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="ADL_cat7_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="ADL_cat7_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="ADL_cat7_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="ADL_cat7_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="ADL_cat7_5_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="ADL_cat7_6_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="B2B_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="BB6_cat5_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="BB6_cat5_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="BB6_cat5_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="BB6_cat5_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Cancer_cat6_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Cancer_cat6_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Cancer_cat6_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Cancer_cat6_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Cancer_cat6_5_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="H3_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="IADL_cat7_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="IADL_cat7_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="IADL_cat7_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="IADL_cat7_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="IADL_cat7_5_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="IADL_cat7_6_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1A_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1B_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1C_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1D_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1DE_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1K_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="J1L_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="K2E_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="K3D_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="K3E_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="K8E_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="L1A_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="L2B_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="L2C_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Oxygen_cat6_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Oxygen_cat6_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Oxygen_cat6_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Oxygen_cat6_4_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Oxygen_cat6_5_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="P4A_cat4_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="P4A_cat4_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="P4A_cat4_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="P4B_cat4_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="P4B_cat4_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="P4B_cat4_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Renal_cat4_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Renal_cat4_2_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Renal_cat4_3_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Sex_cat2_1_c" optype="categorical" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+    </DataField>
+    <DataField name="Age_rcs1_c" optype="continuous" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+      <Interval closure="closedClosed" leftMargin="" rightMargin=""/>
+    </DataField>
+    <DataField name="Age_rcs2_c" optype="continuous" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+      <Interval closure="closedClosed" leftMargin="" rightMargin=""/>
+    </DataField>
+    <DataField name="Age_rcs3_c" optype="continuous" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+      <Interval closure="closedClosed" leftMargin="" rightMargin=""/>
+    </DataField>
+    <DataField name="Age_rcs4_c" optype="continuous" dataType="double" displayName="">
+      <Extension name="units" value=""/>
+      <Extension name="description" value=""/>
+      <Interval closure="closedClosed" leftMargin="" rightMargin=""/>
+    </DataField>
+    <DataField name="Sex" opType="Categorical" dataType="string">
+      <Value value="Male"/>
+      <Value value="Female"/>
+    </DataField>
+  </DataDictionary>
+</PMML>
