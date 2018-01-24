@@ -1,10 +1,14 @@
 # Predictive algorithm reference documents
 
+## Important
+
+Due to some of the files being too large for github, you need to install a git extension called git-lfs before cloning this repo. To download the extension go here https://git-lfs.github.com/
+
 ## Two documents describe the algorithms
 
-**1) Questionnaire file**. This file describes questions for the predictors. The questions are the same as those questions in the surveys  or assessment instruments used to create the predictive algorithms. Also included are the allowed responses and response skip patterns.
+**1) Questionnaire file**. This file describes questions for the predictors. The questions are the same as those questions in the surveys or assessment instruments used to create the predictive algorithms. Also included are the allowed responses and response skip patterns.
 
-The question file is a LimeSurvey survey template (.lss and .csv).  [https://www.limesurvey.org](https://www.limesurvey.org/)
+The question file is a LimeSurvey survey template (.lss and .csv). [https://www.limesurvey.org](https://www.limesurvey.org/)
 
 **2) Algorithm file**. This file describes the method to calculate the risk of the outcome, based on the predictors from the questionnaire file.
 
@@ -34,7 +38,7 @@ There are two types of calibration data:
 
 **2) Algorithm development files** - The files contain code that was used to develop the algorithm or reference documents. For example, algorithms may contain the R databox code used to derive predictive risks from the original development data. This R code can facilitate development, validation or calibration studies.
 
-**3) Algorithm testing data** - These data can be use to test whether a scoring engine is performing correct calculations.  Each row in a CSV file contains values for each predictor in an algorithm, along with the score or algorithm outcome. The data can be used for other purposes, such as creating or testing new algorithm development. Unless specifically identifyied, the algorthim testing data should not be used for calbiration because these data are not representitive of an actual application population.
+**3) Algorithm testing data** - These data can be use to test whether a scoring engine is performing correct calculations. Each row in a CSV file contains values for each predictor in an algorithm, along with the score or algorithm outcome. The data can be used for other purposes, such as creating or testing new algorithm development. Unless specifically identifyied, the algorthim testing data should not be used for calbiration because these data are not representitive of an actual application population.
 
 Testing data are stored as CSV or JSON files and can be identified by the term "test" in the title of the data file.
 
@@ -44,7 +48,7 @@ There several approaches to calculate risk using the provided documents:
 
 **1)** The predictive algorithm parameters within the PMML files can be transcribed into all common programming languages or even used within spreadsheet programs such as MS Excel or Google Sheets.
 
-**2)** PMML can also be used within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or  [https://zementis.com](https://zementis.com).
+**2)** PMML can also be used within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or [https://zementis.com](https://zementis.com).
 
 **3)** We have an API to perform calculations based on the PMML files within this repository. [API documentation.](https://ottawa-mhealth.github.io/pbl-calculator-engine-docs/) For example, see Heart and Stroke Foundation’s [eHealth Risk Assessment](https://ehealth.heartandstroke.ca). APIs provide additional outcome measures and features. For example, the MPoRT algorithm main outcome is 1-year risk, but also provided are:
 
@@ -66,7 +70,7 @@ Please contact dmanuel@ohri.ca for more information about connecting to our API.
 
 We welcome suggestions to improve algorithm documentation or implementation of the risk tools. Feel free to open a new issue, pull request.
 
-However, please note that normal copyright law applies and prevents the further copying, publication or distribution of our work without our permission. We’d be happy to collaborate and allow your use of our algorithm for academic research projects by not-for-profit entities, but if you’re a for-profit or otherwise wanting to reproduce all or part of our work for commercial purposes, please seek our permission first. 
+However, please note that normal copyright law applies and prevents the further copying, publication or distribution of our work without our permission. We’d be happy to collaborate and allow your use of our algorithm for academic research projects by not-for-profit entities, but if you’re a for-profit or otherwise wanting to reproduce all or part of our work for commercial purposes, please seek our permission first.
 
 We also welcome collaborations for future development, validation, calibration or application of the risk tools. Contact Doug Manuel at [dmanuel@ohri.ca](mailto:dmanuel@ohri.ca)
 
@@ -96,13 +100,13 @@ We also welcome collaborations for future development, validation, calibration o
 
 ## Glossary of terms
 
-***Input***
+**_Input_**
 
 `inputName`: The name of the (Lime) web questionnaire for each exposure. For example, a Lime web questionnaire asks questions (inputs) for different types of physical activity (e.g. walking, running, biking).
 
-***Transformation***
+**_Transformation_**
 
-Transformation are steps between **input** and **predictor**.  For example, different types of physical activity inputs (walking, running) are added together and summarized as weekly METS.  The result of the transformation are values for the corresponding `predictorName`. For example, the different physical activity `inputNames` are summarized into `activity_cont`, the `predictorName` for physical activity within MPoRT and other risk algorithms.
+Transformation are steps between **input** and **predictor**. For example, different types of physical activity inputs (walking, running) are added together and summarized as weekly METS. The result of the transformation are values for the corresponding `predictorName`. For example, the different physical activity `inputNames` are summarized into `activity_cont`, the `predictorName` for physical activity within MPoRT and other risk algorithms.
 
 `inputName`: The input for the transformation. The transformation `inputName` is the same as the input `imputName`.
 
@@ -110,7 +114,7 @@ Transformation are steps between **input** and **predictor**.  For example, diff
 
 `equation`: The equation that transforms the values from the `inputName` to the values for the `variableName`.
 
-***Predictor***
+**_Predictor_**
 
 `predictorName`: The name of the beta coefficent in a risk algorithm. e.g. `activity_cont` is the `predictorName` for physical activity. The suffix `_cont` indicates that this predictor is a continous variable (e.g. METS or metabolic equivalents).
 
