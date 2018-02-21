@@ -2,7 +2,7 @@
 
 ## Important
 
-Due to some of the files being too large for github, you need to install a git extension called git-lfs before cloning this repo. To download the extension go here https://git-lfs.github.com/
+Install the git-lfs extension to support large files before cloning this repo (https://git-lfs.github.com/).
 
 ## Two documents describe the algorithms
 
