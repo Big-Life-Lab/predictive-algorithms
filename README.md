@@ -88,15 +88,15 @@ We also welcome collaborations for future development, validation, calibration o
 
 ## References
 
-1. <a name="ref1"></a> Manuel DG, Perez R, Sanmartin C, Taljaard M, Hennessy D, Wilson K, et al. (2016) **Measuring Burden of Unhealthy Behaviours Using a Multivariable Predictive Approach: Life Expectancy Lost in Canada Attributable to Smoking, Alcohol, Physical Inactivity, and Diet**. PLoS Med 13(8): e1002082. [doi:10.1371/journal.pmed.1002082](http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002082)
+1.  <a name="ref1"></a> Manuel DG, Perez R, Sanmartin C, Taljaard M, Hennessy D, Wilson K, et al. (2016) **Measuring Burden of Unhealthy Behaviours Using a Multivariable Predictive Approach: Life Expectancy Lost in Canada Attributable to Smoking, Alcohol, Physical Inactivity, and Diet**. PLoS Med 13(8): e1002082. [doi:10.1371/journal.pmed.1002082](http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002082)
 
-1. <a name="ref2"></a> Manuel DG, Tuna M, Perez R, Tanuseputro P, Hennessy D, Bennett C, Rosella R, Sanmartin C, van Walraven C, Tu JV. **Predicting Stroke Risk Based on Health Behaviours: Development of the Stroke Population Risk Tool (SPoRT)**. PloS One. 2015 Dec 4;10(12):e0143342. [http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342)
+1.  <a name="ref2"></a> Manuel DG, Tuna M, Perez R, Tanuseputro P, Hennessy D, Bennett C, Rosella R, Sanmartin C, van Walraven C, Tu JV. **Predicting Stroke Risk Based on Health Behaviours: Development of the Stroke Population Risk Tool (SPoRT)**. PloS One. 2015 Dec 4;10(12):e0143342. [http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342)
 
-1. <a name="ref3"></a> Taljaard M, Tuna M, Bennett C, Perez R, Rosella L, Tu JV, et al. **Cardiovascular Disease Population Risk Tool (CVDPoRT): predictive algorithm for assessing CVD risk in the community setting. A study protocol.** [BMJ open. 2014;4(10):e006701.](http://bmjopen.bmj.com/content/4/10/e006701.full)
+1.  <a name="ref3"></a> Taljaard M, Tuna M, Bennett C, Perez R, Rosella L, Tu JV, et al. **Cardiovascular Disease Population Risk Tool (CVDPoRT): predictive algorithm for assessing CVD risk in the community setting. A study protocol.** [BMJ open. 2014;4(10):e006701.](http://bmjopen.bmj.com/content/4/10/e006701.full)
 
-1. <a name="ref4"></a> Fisher S, Hsu A, Mojaverian N, Taljaard M, Huyer G, Manuel DG, et al. **Dementia Population Risk Tool (DemPoRT): study protocol for a predictive algorithm assessing dementia risk in the community.** [BMJ open. 2017;7(10).](http://bmjopen.bmj.com/content/7/10/e018018)
+1.  <a name="ref4"></a> Fisher S, Hsu A, Mojaverian N, Taljaard M, Huyer G, Manuel DG, et al. **Dementia Population Risk Tool (DemPoRT): study protocol for a predictive algorithm assessing dementia risk in the community.** [BMJ open. 2017;7(10).](http://bmjopen.bmj.com/content/7/10/e018018)
 
-1. <a name="ref5"></a> Hsu AT, Manuel DG, Taljaard M, Chalifoux M, Bennett C, Costa AP, et al. Algorithm for predicting death among older adults in the home care setting: study protocol for the Risk Evaluation for Support: Predictions for Elder-life in the Community Tool (RESPECT). [BMJ open. 2016;6(12).](http://bmjopen.bmj.com/content/6/12/e013666).
+1.  <a name="ref5"></a> Hsu AT, Manuel DG, Taljaard M, Chalifoux M, Bennett C, Costa AP, et al. Algorithm for predicting death among older adults in the home care setting: study protocol for the Risk Evaluation for Support: Predictions for Elder-life in the Community Tool (RESPECT). [BMJ open. 2016;6(12).](http://bmjopen.bmj.com/content/6/12/e013666).
 
 ## Glossary of terms
 
@@ -121,3 +121,7 @@ Transformation are steps between **input** and **predictor**. For example, diffe
 `beta`: the beta coeffecient for each `predictorName`.
 
 `referencePoint`: The reference for the beta coefficient. The typical `referencePoint` for predictive algorithms in this repository is the population average for a `predictorName` within the development population. Using a 'centred' mean `referencePoint` facilitates recalibration in different populations. Alternative `referencePoint`s may be available in the calibration tables. For example, the MPoRT algorithm was developed using Ontario, Canada, 2001 to 2007. The population average (mean) physical activity for males was 0.432 log METS. Of note, 10e0.432 = 2.7 METS, the averate weekly METS in the development cohort. The recommended physical activity in Canada and many other countries is 15 METs per week. Calibration to a new population should include `referencePoint` values that correspond to that new population.
+
+## License
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
