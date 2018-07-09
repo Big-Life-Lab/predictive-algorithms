@@ -11,7 +11,7 @@ Men: 0.026, 95% confidence interval [CI] 0.025–0.028; women: 0.018, 95% 0.017�
 
 *Discrimination.* Men: C statistic 0.82, 95% CI 0.81–0.83; women: 0.86, 95% CI 0.85–0.87).
 
-*Calibration.* Overall population (5-year observed cumulative incidence function v. predicted risk, men: 0.28%; women: 0.38%). Observed versus predicted < 20% difference in predefined policy-relevant subgroups (206 of 208 groups) at P<0.05).
+*Calibration.* Overall population (5-year observed cumulative incidence function v. predicted risk, men: 0.28%; women: 0.38%). Calibration slope for women: 0.9734, SE 0.0698; for men: 0.9295, SE 0.0731. Observed versus predicted < 20% difference in predefined policy-relevant subgroups (206 of 208 groups) at P<0.05.
 
 Trial registration: ClinicalTrials.gov, no. NCT02267447
 
@@ -37,7 +37,7 @@ The recommend algorithm for use in the clinical or population setting.
 
 *percentile.
 
-*health-age.json* - to be added.
+*health-age.json* - to be added. Mean 5-year risk of the full data (combined development and validation data), using a 3-year moving average.
 
 - 
 
