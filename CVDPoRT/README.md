@@ -2,7 +2,7 @@
 
 See [projectbiglife.ca](https://www.projectbiglife.ca) for an example of indivudal calculations of 5-year risk and 'heart age', as well as additional infomation about the algorithm and API.  
 
-**Cardiovascular Disease Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of cardiovascular disease. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS).  Focus is on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.
+**Cardiovascular Disease Population Risk Tool (CVDPoRT).** A predictive algorithm for the calculation of 5-year risk of cardiovascular disease. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS).  Focus is on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.
 
 There were 104 219 respondents aged 20 to 105 years, 3709 cardiovascular events, and 818 478 person-years follow-up in the combined derivation and validation cohorts. 
 
