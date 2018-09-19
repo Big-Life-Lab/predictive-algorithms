@@ -1,0 +1,5061 @@
+==<PMML version=“2.1” xmlns="http://www.dmg.org/PMML-4_2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_2 http://www.dmg.org/v4-2/pmml-4-2.xsd">
+<Header copyright="Copyright (c) 2016 The Ottawa Hospital" description="MPoRT Female V1.2.5”>
+<Annotation>Mortality (all-cause) Population Risk Tool (MPoRT)
+  <Extension name="author">Doug Manuel</Extension>
+</Annotation>
+<Extension name="user" value="theottawahospital" extender="COXPH"/>
+  <Application name="COXPH" version="1.4"/>
+  <Timestamp>2016-05-26 17:01:13</Timestamp>
+ </Header>
+ <DataDictionary numberOfFields="26">
+  <DataField name="survival" optype="continuous" dataType="double"/>
+  <DataField name="Age_cont" optype="continuous" dataType="double"/>
+  <DataField name="Age_spline" optype="continuous" dataType="double"/>
+  <DataField name="QSLight_df" optype="continuous" dataType="double"/>
+  <DataField name="QSHeavy_df" optype="continuous" dataType="double"/>
+  <DataField name="PhysicalActivity_cont" optype="continuous" dataType="double"/>
+  <DataField name="DietScore_cont" optype="continuous" dataType="double"/>
+  <DataField name="AlcoholHeavy_cat" optype="categorical" dataType="string"/>
+  <DataField name="AlcoholMod_cat" optype="categorical" dataType="string"/>
+  <DataField name="DepIndMod_cat" optype="categorical" dataType="string"/>
+  <DataField name="DepIndHigh_cat" optype="categorical" dataType="string"/>
+  <DataField name="EduNoGrad_cat" optype="categorical" dataType="string"/>
+  <DataField name="EduHSGrad_cat" optype="categorical" dataType="string"/>
+  <DataField name="ImEth0To15_cat" optype="categorical" dataType="string"/>
+  <DataField name="ImEth16To30_cat" optype="categorical" dataType="string"/>
+  <DataField name="ImEth31To45_cat" optype="categorical" dataType="string"/>
+  <DataField name="HeartDis_cat" optype="categorical" dataType="string"/>
+  <DataField name="Stroke_cat" optype="categorical" dataType="string"/>
+  <DataField name="Cancer_cat" optype="categorical" dataType="string"/>
+  <DataField name="Diabetes_cat" optype="categorical" dataType="string"/>
+  <DataField name="BMI_spline" optype="continuous" dataType="double"/>
+  <DataField name="CancerAge_Int" optype="continuous" dataType="double"/>
+  <DataField name="DiabetesAge_Int" optype="continuous" dataType="double"/>
+  <DataField name="start" optype="continuous" dataType="double"/>
+  <DataField name="stop" optype="continuous" dataType="double"/>
+  <DataField name="EventDeath" optype="continuous" dataType="double"/>
+ </DataDictionary>
+<LocalTransformations>
+<DerivedField name="StartYear" dataType="string" optype="categorical">
+  <Apply function="formatDatetime">
+  <FieldRef field="StartDate"/>
+  <Constant>%Y</Constant>
+  </Apply>
+  </DerivedField>
+ <DerivedField name="Age_cont" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="age"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <FieldRef field="age"/>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="Age_spline" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="Age_cont"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="greaterThan">
+      <FieldRef field="Age_cont"/>
+      <Constant dataType="double">80</Constant>
+    </Apply>
+    <Apply function="-">
+      <FieldRef field="Age_cont"/>
+      <Constant dataType="double">80</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="edumissing" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="hs"/>
+      </Apply>
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="hs"/>
+          <Constant dataType="string">hs1</Constant>
+        </Apply>
+        <Apply function="is.na">
+          <FieldRef field="ed"/>
+        </Apply>
+      </Apply>
+    </Apply>
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="hs"/>
+          <Constant dataType="string">hs1</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="ed"/>
+          <Constant dataType="string">ed1</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="hdg"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="EduNoGrad_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="edumissing"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="hs"/>
+      <Constant dataType="string">hs2</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="EduHSGrad_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="edumissing"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="or">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="hs"/>
+          <Constant dataType="string">hs1</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="ed"/>
+          <Constant dataType="string">ed2</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="hs"/>
+            <Constant dataType="string">hs1</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="ed"/>
+            <Constant dataType="string">ed1</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="hdg"/>
+          <Constant dataType="string">hdg1</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="DepIndHigh_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="dep"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="dep"/>
+      <Constant dataType="string">dep1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="DepIndMod_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="dep"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="dep"/>
+      <Constant dataType="string">dep2</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="imyrago" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="imm"/>
+      </Apply>
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="imm"/>
+          <Constant dataType="string">imm2</Constant>
+        </Apply>
+        <Apply function="is.na">
+          <FieldRef field="imyr"/>
+        </Apply>
+      </Apply>
+    </Apply>
+    <Apply function="equal">
+      <FieldRef field="imm"/>
+      <Constant dataType="string">imm1</Constant>
+    </Apply>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="-">
+    <FieldRef field="StartYear"/>
+    <FieldRef field="imyr"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="ImEth0To15_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="is.na">
+      <FieldRef field="imm"/>
+    </Apply>
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="imm"/>
+        <Constant dataType="string">imm2</Constant>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="imyr"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="imm"/>
+          <Constant dataType="string">imm2</Constant>
+        </Apply>
+        <Apply function="greaterOrEqual">
+          <FieldRef field="imyrago"/>
+          <Constant dataType="double">1</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="lessOrEqual">
+        <FieldRef field="imyrago"/>
+        <Constant dataType="double">15</Constant>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="or">
+        <Apply function="equal">
+          <FieldRef field="imm"/>
+          <Constant dataType="string">imm1</Constant>
+        </Apply>
+        <Apply function="greaterThan">
+          <FieldRef field="imyrago"/>
+          <Constant dataType="double">15</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="ImEth16To30_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="is.na">
+      <FieldRef field="imm"/>
+    </Apply>
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="imm"/>
+        <Constant dataType="string">imm2</Constant>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="imyr"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="imm"/>
+          <Constant dataType="string">imm2</Constant>
+        </Apply>
+        <Apply function="greaterThan">
+          <FieldRef field="imyrago"/>
+          <Constant dataType="double">15</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="lessOrEqual">
+        <FieldRef field="imyrago"/>
+        <Constant dataType="double">30</Constant>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="or">
+        <Apply function="or">
+          <Apply function="equal">
+            <FieldRef field="imm"/>
+            <Constant dataType="string">imm1</Constant>
+          </Apply>
+          <Apply function="lessOrEqual">
+            <FieldRef field="imyrago"/>
+            <Constant dataType="double">15</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="greaterThan">
+          <FieldRef field="imyrago"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="ImEth31To45_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="is.na">
+      <FieldRef field="imm"/>
+    </Apply>
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="imm"/>
+        <Constant dataType="string">imm2</Constant>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="imyr"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="imm"/>
+          <Constant dataType="string">imm2</Constant>
+        </Apply>
+        <Apply function="greaterThan">
+          <FieldRef field="imyrago"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="lessOrEqual">
+        <FieldRef field="imyrago"/>
+        <Constant dataType="double">45</Constant>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="or">
+        <Apply function="or">
+          <Apply function="equal">
+            <FieldRef field="imm"/>
+            <Constant dataType="string">imm1</Constant>
+          </Apply>
+          <Apply function="lessOrEqual">
+            <FieldRef field="imyrago"/>
+            <Constant dataType="double">30</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="greaterThan">
+          <FieldRef field="imyrago"/>
+          <Constant dataType="double">45</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="missingsmoking" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="smk"/>
+      </Apply>
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="smk"/>
+          <Constant dataType="string">smk1</Constant>
+        </Apply>
+        <Apply function="is.na">
+          <FieldRef field="cigdayd"/>
+        </Apply>
+      </Apply>
+    </Apply>
+    <Apply function="and">
+      <Apply function="or">
+        <Apply function="equal">
+          <FieldRef field="smk"/>
+          <Constant dataType="string">smk2</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="smk"/>
+          <Constant dataType="string">smk3</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="evdn"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="or">
+          <Apply function="equal">
+            <FieldRef field="smk"/>
+            <Constant dataType="string">smk2</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="smk"/>
+            <Constant dataType="string">smk3</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="evdn"/>
+          <Constant dataType="string">evdn1</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="cigdayf"/>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="formerlight" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingsmoking"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="or">
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="smk"/>
+            <Constant dataType="string">smk3</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="evdn"/>
+            <Constant dataType="string">evdn1</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="lessThan">
+          <FieldRef field="cigdayf"/>
+          <Constant dataType="double">20</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="smk"/>
+            <Constant dataType="string">smk3</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="evdn"/>
+            <Constant dataType="string">evdn2</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="s100"/>
+          <Constant dataType="string">s1001</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="formerheavy" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingsmoking"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="smk"/>
+          <Constant dataType="string">smk3</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="evdn"/>
+          <Constant dataType="string">evdn1</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="greaterOrEqual">
+        <FieldRef field="cigdayf"/>
+        <Constant dataType="double">20</Constant>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="smklight" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingsmoking"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="or">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="smk"/>
+          <Constant dataType="string">smk1</Constant>
+        </Apply>
+        <Apply function="lessThan">
+          <FieldRef field="cigdayd"/>
+          <Constant dataType="double">20</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="smk"/>
+        <Constant dataType="string">smk2</Constant>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="smkheavy" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingsmoking"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="smk"/>
+        <Constant dataType="string">smk1</Constant>
+      </Apply>
+      <Apply function="greaterOrEqual">
+        <FieldRef field="cigdayd"/>
+        <Constant dataType="double">20</Constant>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="quittime" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="equal">
+      <FieldRef field="missingsmoking"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+    <Apply function="is.na">
+      <FieldRef field="stpn"/>
+    </Apply>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="stpn"/>
+      <Constant dataType="string">stpn1</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="stpn"/>
+        <Constant dataType="string">stpn2</Constant>
+      </Apply>
+      <Constant dataType="double">1</Constant>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="stpn"/>
+          <Constant dataType="string">stpn3</Constant>
+        </Apply>
+        <Constant dataType="double">2</Constant>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="stpn"/>
+            <Constant dataType="string">stpn4</Constant>
+          </Apply>
+          <FieldRef field="stpny"/>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="QSLight_df" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingsmoking"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="smklight"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="formerlight"/>
+        <Constant dataType="double">1</Constant>
+      </Apply>
+      <Apply function="exp">
+        <Apply function="/">
+          <Apply function="-">
+            <FieldRef field="quittime"/>
+          </Apply>
+          <Constant dataType="double">26</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="QSHeavy_df" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingsmoking"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="smkheavy"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="formerheavy"/>
+        <Constant dataType="double">1</Constant>
+      </Apply>
+      <Apply function="exp">
+        <Apply function="/">
+          <Apply function="-">
+            <FieldRef field="quittime"/>
+          </Apply>
+          <Constant dataType="double">26</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="missingalcohol" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="is.na">
+      <FieldRef field="dev"/>
+    </Apply>
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="dev"/>
+        <Constant dataType="string">dev1</Constant>
+      </Apply>
+      <Apply function="or">
+        <Apply function="or">
+          <Apply function="is.na">
+            <FieldRef field="da12"/>
+          </Apply>
+          <Apply function="is.na">
+            <FieldRef field="db"/>
+          </Apply>
+        </Apply>
+        <Apply function="is.na">
+          <FieldRef field="dany"/>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drkm2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drkm"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drkm"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drkt2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drkt"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drkt"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drkw2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drkw"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drkw"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drkr2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drkr"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drkr"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drkf2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drkf"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drkf"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drksa2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drksa"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drksa"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="drk_drksu2" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="is.na">
+      <FieldRef field="drk_drksu"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <FieldRef field="drk_drksu"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="weeklyalc" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="dev"/>
+        <Constant dataType="string">dev1</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="dany"/>
+        <Constant dataType="string">dany1</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="+">
+      <Apply function="+">
+        <Apply function="+">
+          <Apply function="+">
+            <Apply function="+">
+              <Apply function="+">
+                <FieldRef field="drk_drkm2"/>
+                <FieldRef field="drk_drkt2"/>
+              </Apply>
+              <FieldRef field="drk_drkw2"/>
+            </Apply>
+            <FieldRef field="drk_drkr2"/>
+          </Apply>
+          <FieldRef field="drk_drkf2"/>
+        </Apply>
+        <FieldRef field="drk_drksa2"/>
+      </Apply>
+      <FieldRef field="drk_drksu2"/>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="bingeflag" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="not">
+        <Apply function="is.na">
+          <FieldRef field="db"/>
+        </Apply>
+      </Apply>
+      <Apply function="or">
+        <Apply function="equal">
+          <FieldRef field="db"/>
+          <Constant dataType="string">db5</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="db"/>
+          <Constant dataType="string">db6</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="greaterOrEqual">
+        <FieldRef field="drk_drkm2"/>
+        <Constant dataType="double">5</Constant>
+      </Apply>
+      <Constant dataType="double">1</Constant>
+      <Apply function="if">
+        <Apply function="greaterOrEqual">
+          <FieldRef field="drk_drkt2"/>
+          <Constant dataType="double">5</Constant>
+        </Apply>
+        <Constant dataType="double">1</Constant>
+        <Apply function="if">
+          <Apply function="greaterOrEqual">
+            <FieldRef field="drk_drkw2"/>
+            <Constant dataType="double">5</Constant>
+          </Apply>
+          <Constant dataType="double">1</Constant>
+          <Apply function="if">
+            <Apply function="greaterOrEqual">
+              <FieldRef field="drk_drkr2"/>
+              <Constant dataType="double">5</Constant>
+            </Apply>
+            <Constant dataType="double">1</Constant>
+            <Apply function="if">
+              <Apply function="greaterOrEqual">
+                <FieldRef field="drk_drkf2"/>
+                <Constant dataType="double">5</Constant>
+              </Apply>
+              <Constant dataType="double">1</Constant>
+              <Apply function="if">
+                <Apply function="greaterOrEqual">
+                  <FieldRef field="drk_drksa2"/>
+                  <Constant dataType="double">5</Constant>
+                </Apply>
+                <Constant dataType="double">1</Constant>
+                <Apply function="if">
+                  <Apply function="greaterOrEqual">
+                    <FieldRef field="drk_drksu2"/>
+                    <Constant dataType="double">5</Constant>
+                  </Apply>
+                  <Constant dataType="double">1</Constant>
+                  <Constant dataType="double">0</Constant>
+                </Apply>
+              </Apply>
+            </Apply>
+          </Apply>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="AlcoholMod_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="bingeflag"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="dev"/>
+              <Constant dataType="string">dev1</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="dany"/>
+              <Constant dataType="string">dany1</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="greaterThan">
+            <FieldRef field="weeklyalc"/>
+            <Constant dataType="double">2</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="lessOrEqual">
+          <FieldRef field="weeklyalc"/>
+          <Constant dataType="double">14</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">1</Constant>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="AlcoholHeavy_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingalcohol"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="bingeflag"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="dev"/>
+            <Constant dataType="string">dev1</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="dany"/>
+            <Constant dataType="string">dany1</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="greaterThan">
+          <FieldRef field="weeklyalc"/>
+          <Constant dataType="double">14</Constant>
+        </Apply>
+      </Apply>
+      <Constant dataType="double">1</Constant>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="missingdiet" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="or">
+    <Apply function="or">
+      <Apply function="or">
+        <Apply function="or">
+          <Apply function="or">
+            <Apply function="or">
+              <Apply function="or">
+                <Apply function="or">
+                  <Apply function="or">
+                    <Apply function="or">
+                      <Apply function="or">
+                        <Apply function="is.na">
+                          <FieldRef field="juiu"/>
+                        </Apply>
+                        <Apply function="is.na">
+                          <FieldRef field="jui"/>
+                        </Apply>
+                      </Apply>
+                      <Apply function="is.na">
+                        <FieldRef field="frtu"/>
+                      </Apply>
+                    </Apply>
+                    <Apply function="is.na">
+                      <FieldRef field="frt"/>
+                    </Apply>
+                  </Apply>
+                  <Apply function="is.na">
+                    <FieldRef field="salu"/>
+                  </Apply>
+                </Apply>
+                <Apply function="is.na">
+                  <FieldRef field="sal"/>
+                </Apply>
+              </Apply>
+              <Apply function="is.na">
+                <FieldRef field="potu"/>
+              </Apply>
+            </Apply>
+            <Apply function="is.na">
+              <FieldRef field="pot"/>
+            </Apply>
+          </Apply>
+          <Apply function="is.na">
+            <FieldRef field="caru"/>
+          </Apply>
+        </Apply>
+        <Apply function="is.na">
+          <FieldRef field="car"/>
+        </Apply>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="vegu"/>
+      </Apply>
+    </Apply>
+    <Apply function="is.na">
+      <FieldRef field="veg"/>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="djuice" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="juiu"/>
+      <Constant dataType="string">juid</Constant>
+    </Apply>
+    <FieldRef field="jui"/>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="juiu"/>
+        <Constant dataType="string">juiw</Constant>
+      </Apply>
+      <Apply function="/">
+        <FieldRef field="jui"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="juiu"/>
+          <Constant dataType="string">juim</Constant>
+        </Apply>
+        <Apply function="/">
+          <FieldRef field="jui"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="juiu"/>
+            <Constant dataType="string">juiy</Constant>
+          </Apply>
+          <Apply function="/">
+            <FieldRef field="jui"/>
+            <Constant dataType="double">365</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dfruit" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="frtu"/>
+      <Constant dataType="string">frtd</Constant>
+    </Apply>
+    <FieldRef field="frt"/>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="frtu"/>
+        <Constant dataType="string">frtw</Constant>
+      </Apply>
+      <Apply function="/">
+        <FieldRef field="frt"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="frtu"/>
+          <Constant dataType="string">frtm</Constant>
+        </Apply>
+        <Apply function="/">
+          <FieldRef field="frt"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="frtu"/>
+            <Constant dataType="string">frty</Constant>
+          </Apply>
+          <Apply function="/">
+            <FieldRef field="frt"/>
+            <Constant dataType="double">365</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dsalad" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="salu"/>
+      <Constant dataType="string">sald</Constant>
+    </Apply>
+    <FieldRef field="sal"/>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="salu"/>
+        <Constant dataType="string">salw</Constant>
+      </Apply>
+      <Apply function="/">
+        <FieldRef field="sal"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="salu"/>
+          <Constant dataType="string">salm</Constant>
+        </Apply>
+        <Apply function="/">
+          <FieldRef field="sal"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="salu"/>
+            <Constant dataType="string">saly</Constant>
+          </Apply>
+          <Apply function="/">
+            <FieldRef field="sal"/>
+            <Constant dataType="double">365</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dpotato" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="potu"/>
+      <Constant dataType="string">potd</Constant>
+    </Apply>
+    <FieldRef field="pot"/>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="potu"/>
+        <Constant dataType="string">potw</Constant>
+      </Apply>
+      <Apply function="/">
+        <FieldRef field="pot"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="potu"/>
+          <Constant dataType="string">potm</Constant>
+        </Apply>
+        <Apply function="/">
+          <FieldRef field="pot"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="potu"/>
+            <Constant dataType="string">poty</Constant>
+          </Apply>
+          <Apply function="/">
+            <FieldRef field="pot"/>
+            <Constant dataType="double">365</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dcarrot" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="caru"/>
+      <Constant dataType="string">card</Constant>
+    </Apply>
+    <FieldRef field="car"/>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="caru"/>
+        <Constant dataType="string">carw</Constant>
+      </Apply>
+      <Apply function="/">
+        <FieldRef field="car"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="caru"/>
+          <Constant dataType="string">carm</Constant>
+        </Apply>
+        <Apply function="/">
+          <FieldRef field="car"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="caru"/>
+            <Constant dataType="string">cary</Constant>
+          </Apply>
+          <Apply function="/">
+            <FieldRef field="car"/>
+            <Constant dataType="double">365</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dveg" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="vegu"/>
+      <Constant dataType="string">vegd</Constant>
+    </Apply>
+    <FieldRef field="veg"/>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="vegu"/>
+        <Constant dataType="string">vegw</Constant>
+      </Apply>
+      <Apply function="/">
+        <FieldRef field="veg"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="vegu"/>
+          <Constant dataType="string">vegm</Constant>
+        </Apply>
+        <Apply function="/">
+          <FieldRef field="veg"/>
+          <Constant dataType="double">30</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="vegu"/>
+            <Constant dataType="string">vegy</Constant>
+          </Apply>
+          <Apply function="/">
+            <FieldRef field="veg"/>
+            <Constant dataType="double">365</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="fruitnveg" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="greaterThan">
+      <Apply function="+">
+        <Apply function="+">
+          <Apply function="+">
+            <Apply function="+">
+              <FieldRef field="dfruit"/>
+              <FieldRef field="dsalad"/>
+            </Apply>
+            <FieldRef field="dpotato"/>
+          </Apply>
+          <FieldRef field="dcarrot"/>
+        </Apply>
+        <FieldRef field="dveg"/>
+      </Apply>
+      <Constant dataType="double">8</Constant>
+    </Apply>
+    <Constant dataType="double">8</Constant>
+    <Apply function="+">
+      <Apply function="+">
+        <Apply function="+">
+          <Apply function="+">
+            <FieldRef field="dfruit"/>
+            <FieldRef field="dsalad"/>
+          </Apply>
+          <FieldRef field="dpotato"/>
+        </Apply>
+        <FieldRef field="dcarrot"/>
+      </Apply>
+      <FieldRef field="dveg"/>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="nocarrotflag" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <Apply function="*">
+        <FieldRef field="dcarrot"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Apply function="if">
+      <Apply function="greaterOrEqual">
+        <Apply function="*">
+          <FieldRef field="dcarrot"/>
+          <Constant dataType="double">7</Constant>
+        </Apply>
+        <Constant dataType="double">1</Constant>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="highpotatoflag" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="greaterOrEqual">
+      <Apply function="*">
+        <FieldRef field="dpotato"/>
+        <Constant dataType="double">7</Constant>
+      </Apply>
+      <Constant dataType="double">5</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="highjuice" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="djuice"/>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <Apply function="if">
+      <Apply function="equal">
+        <FieldRef field="djuice"/>
+        <Constant dataType="double">1</Constant>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+      <Apply function="if">
+        <Apply function="equal">
+          <FieldRef field="djuice"/>
+          <Constant dataType="double">2</Constant>
+        </Apply>
+        <Constant dataType="double">1</Constant>
+        <Apply function="if">
+          <Apply function="equal">
+            <FieldRef field="djuice"/>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">2</Constant>
+          <Apply function="if">
+            <Apply function="equal">
+              <FieldRef field="djuice"/>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+            <Apply function="if">
+              <Apply function="equal">
+                <FieldRef field="djuice"/>
+                <Constant dataType="double">5</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+              <Apply function="if">
+                <Apply function="equal">
+                  <FieldRef field="djuice"/>
+                  <Constant dataType="double">5</Constant>
+                </Apply>
+                <Constant dataType="double">4</Constant>
+                <Apply function="if">
+                  <Apply function="equal">
+                    <FieldRef field="djuice"/>
+                    <Constant dataType="double">6</Constant>
+                  </Apply>
+                  <Constant dataType="double">5</Constant>
+                  <Constant dataType="double">0</Constant>
+                </Apply>
+              </Apply>
+            </Apply>
+          </Apply>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dietraw" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="-">
+    <Apply function="-">
+      <Apply function="-">
+        <Apply function="+">
+          <Constant dataType="double">2</Constant>
+          <FieldRef field="fruitnveg"/>
+        </Apply>
+        <Apply function="*">
+          <Constant dataType="double">2</Constant>
+          <FieldRef field="highpotatoflag"/>
+        </Apply>
+      </Apply>
+      <Apply function="*">
+        <Constant dataType="double">2</Constant>
+        <FieldRef field="nocarrotflag"/>
+      </Apply>
+    </Apply>
+    <Apply function="*">
+      <Constant dataType="double">2</Constant>
+      <FieldRef field="highjuice"/>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="DietScore_cont" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingdiet"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="lessThan">
+      <FieldRef field="dietraw"/>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <Apply function="if">
+      <Apply function="greaterThan">
+        <FieldRef field="dietraw"/>
+        <Constant dataType="double">10</Constant>
+      </Apply>
+      <Constant dataType="double">10</Constant>
+      <FieldRef field="dietraw"/>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="missingactivity" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="and">
+            <Apply function="and">
+              <Apply function="and">
+                <Apply function="and">
+                  <Apply function="and">
+                    <Apply function="and">
+                      <Apply function="and">
+                        <Apply function="and">
+                          <Apply function="and">
+                            <Apply function="and">
+                              <Apply function="and">
+                                <Apply function="and">
+                                  <Apply function="and">
+                                    <Apply function="and">
+                                      <Apply function="and">
+                                        <Apply function="and">
+                                          <Apply function="and">
+                                            <Apply function="and">
+                                              <Apply function="and">
+                                                <Apply function="and">
+                                                  <Apply function="and">
+                                                    <Apply function="and">
+                                                      <Apply function="and">
+                                                        <Apply function="and">
+                                                          <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="and">
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa0"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa1"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa2"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa3"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa4"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa5"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa6"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa7"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa8"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa9"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa10"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa11"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa12"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa13"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa14"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa15"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa16"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa17"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa18"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa19"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa20"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa21"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="equal">
+                                                            <FieldRef field="lpa_lpa22"/>
+                                                            <Constant dataType="string">No</Constant>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa1"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa2"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa3"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa4"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa5"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa6"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa7"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa8"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa9"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa10"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa11"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa12"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa13"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa14"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa15"/>
+                                                            </Apply>
+                                                            </Apply>
+                                                            <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa16"/>
+                                                            </Apply>
+                                                          </Apply>
+                                                          <Apply function="is.na">
+                                                            <FieldRef field="lpat_lpa17"/>
+                                                          </Apply>
+                                                        </Apply>
+                                                        <Apply function="is.na">
+                                                          <FieldRef field="lpat_lpa18"/>
+                                                        </Apply>
+                                                      </Apply>
+                                                      <Apply function="is.na">
+                                                        <FieldRef field="lpat_lpa19"/>
+                                                      </Apply>
+                                                    </Apply>
+                                                    <Apply function="is.na">
+                                                      <FieldRef field="lpat_lpa20"/>
+                                                    </Apply>
+                                                  </Apply>
+                                                  <Apply function="is.na">
+                                                    <FieldRef field="lpat_lpa21"/>
+                                                  </Apply>
+                                                </Apply>
+                                                <Apply function="is.na">
+                                                  <FieldRef field="lpat_lpa22"/>
+                                                </Apply>
+                                              </Apply>
+                                              <Apply function="is.na">
+                                                <FieldRef field="lpam_lpa1"/>
+                                              </Apply>
+                                            </Apply>
+                                            <Apply function="is.na">
+                                              <FieldRef field="lpam_lpa2"/>
+                                            </Apply>
+                                          </Apply>
+                                          <Apply function="is.na">
+                                            <FieldRef field="lpam_lpa3"/>
+                                          </Apply>
+                                        </Apply>
+                                        <Apply function="is.na">
+                                          <FieldRef field="lpam_lpa4"/>
+                                        </Apply>
+                                      </Apply>
+                                      <Apply function="is.na">
+                                        <FieldRef field="lpam_lpa5"/>
+                                      </Apply>
+                                    </Apply>
+                                    <Apply function="is.na">
+                                      <FieldRef field="lpam_lpa6"/>
+                                    </Apply>
+                                  </Apply>
+                                  <Apply function="is.na">
+                                    <FieldRef field="lpam_lpa7"/>
+                                  </Apply>
+                                </Apply>
+                                <Apply function="is.na">
+                                  <FieldRef field="lpam_lpa8"/>
+                                </Apply>
+                              </Apply>
+                              <Apply function="is.na">
+                                <FieldRef field="lpam_lpa9"/>
+                              </Apply>
+                            </Apply>
+                            <Apply function="is.na">
+                              <FieldRef field="lpam_lpa10"/>
+                            </Apply>
+                          </Apply>
+                          <Apply function="is.na">
+                            <FieldRef field="lpam_lpa11"/>
+                          </Apply>
+                        </Apply>
+                        <Apply function="is.na">
+                          <FieldRef field="lpam_lpa12"/>
+                        </Apply>
+                      </Apply>
+                      <Apply function="is.na">
+                        <FieldRef field="lpam_lpa13"/>
+                      </Apply>
+                    </Apply>
+                    <Apply function="is.na">
+                      <FieldRef field="lpam_lpa14"/>
+                    </Apply>
+                  </Apply>
+                  <Apply function="is.na">
+                    <FieldRef field="lpam_lpa15"/>
+                  </Apply>
+                </Apply>
+                <Apply function="is.na">
+                  <FieldRef field="lpam_lpa16"/>
+                </Apply>
+              </Apply>
+              <Apply function="is.na">
+                <FieldRef field="lpam_lpa17"/>
+              </Apply>
+            </Apply>
+            <Apply function="is.na">
+              <FieldRef field="lpam_lpa18"/>
+            </Apply>
+          </Apply>
+          <Apply function="is.na">
+            <FieldRef field="lpam_lpa19"/>
+          </Apply>
+        </Apply>
+        <Apply function="is.na">
+          <FieldRef field="lpam_lpa20"/>
+        </Apply>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa21"/>
+      </Apply>
+    </Apply>
+    <Apply function="is.na">
+      <FieldRef field="lpam_lpa22"/>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="walking_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa1"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa1"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa1"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="walking" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="walking_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa1"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa1"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa1"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa1"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa1"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa1"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa1"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa1"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa1"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa1"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa1"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa1"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="garden_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa2"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa2"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa2"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="garden" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="garden_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa2"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa2"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa2"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa2"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa2"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa2"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa2"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa2"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa2"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa2"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa2"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa2"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="swim_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa3"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa3"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa3"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="swim" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="swim_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa3"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa3"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa3"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa3"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa3"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa3"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa3"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa3"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa3"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa3"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa3"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa3"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="bike_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa4"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa4"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa4"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="bike" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="bike_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa4"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa4"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa4"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa4"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa4"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa4"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa4"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa4"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa4"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa4"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa4"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa4"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dance_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa5"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa5"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa5"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="dance" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="dance_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa5"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa5"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa5"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa5"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa5"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa5"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa5"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa5"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa5"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa5"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa5"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa5"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="hexercises_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa6"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa6"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa6"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="hexercises" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="hexercises_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa6"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa6"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa6"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa6"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa6"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa6"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa6"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa6"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa6"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa6"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa6"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa6"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="hockey_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa7"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa7"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa7"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="hockey" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="hockey_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa7"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa7"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa7"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">6</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa7"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa7"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa7"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">6</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa7"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa7"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa7"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">6</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa7"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa7"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa7"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">6</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="skate_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa8"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa8"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa8"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="skate" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="skate_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa8"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa8"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa8"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa8"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa8"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa8"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa8"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa8"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa8"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa8"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa8"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa8"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="inline_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa9"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa9"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa9"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="inline" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="inline_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa9"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa9"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa9"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">5</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa9"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa9"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa9"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">5</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa9"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa9"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa9"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">5</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa9"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa9"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa9"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">5</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="jogrun_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa10"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa10"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa10"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="jogrun" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="jogrun_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa10"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa10"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa10"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">9.5</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa10"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa10"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa10"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">9.5</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa10"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa10"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa10"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">9.5</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa10"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa10"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa10"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">9.5</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="golf_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa11"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa11"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa11"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="golf" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="golf_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa11"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa11"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa11"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa11"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa11"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa11"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa11"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa11"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa11"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa11"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa11"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa11"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="aerobics_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa12"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa12"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa12"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="aerobics" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="aerobics_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa12"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa12"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa12"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa12"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa12"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa12"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa12"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa12"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa12"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa12"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa12"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa12"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="ski_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa13"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa13"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa13"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="ski" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="ski_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa13"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa13"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa13"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa13"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa13"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa13"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa13"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa13"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa13"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa13"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa13"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa13"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="bowl_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa14"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa14"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa14"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="bowl" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="bowl_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa14"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa14"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa14"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">2</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa14"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa14"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa14"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">2</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa14"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa14"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa14"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">2</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa14"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa14"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa14"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">2</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="baseball_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa15"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa15"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa15"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="baseball" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="baseball_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa15"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa15"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa15"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa15"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa15"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa15"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa15"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa15"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa15"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa15"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa15"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa15"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="tennis_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa16"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa16"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa16"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="tennis" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="tennis_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa16"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa16"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa16"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa16"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa16"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa16"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa16"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa16"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa16"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa16"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa16"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa16"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="weights_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa17"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa17"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa17"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="weights" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="weights_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa17"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa17"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa17"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa17"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa17"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa17"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa17"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa17"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa17"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa17"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa17"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa17"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="fishing_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa18"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa18"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa18"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="fishing" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="fishing_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa18"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa18"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa18"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">3</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa18"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa18"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa18"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">3</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa18"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa18"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa18"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">3</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa18"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa18"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa18"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">3</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="volleyball_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa19"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa19"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa19"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="volleyball" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="volleyball_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa19"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa19"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa19"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">5</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa19"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa19"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa19"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">5</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa19"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa19"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa19"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">5</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa19"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa19"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa19"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">5</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="basketball_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa20"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa20"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa20"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="basketball" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="basketball_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa20"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa20"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa20"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">6</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa20"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa20"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa20"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">6</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa20"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa20"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa20"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">6</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa20"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa20"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa20"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">6</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="soccer_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa21"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa21"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa21"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="soccer" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="soccer_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa21"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa21"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa21"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">5</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa21"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa21"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa21"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">5</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa21"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa21"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa21"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">5</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa21"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa21"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa21"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">5</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="other_miss" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="equal">
+      <FieldRef field="lpa_lpa22"/>
+      <Constant dataType="string">Yes</Constant>
+    </Apply>
+    <Apply function="or">
+      <Apply function="is.na">
+        <FieldRef field="lpat_lpa22"/>
+      </Apply>
+      <Apply function="is.na">
+        <FieldRef field="lpam_lpa22"/>
+      </Apply>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="other" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="other_miss"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="and">
+      <Apply function="equal">
+        <FieldRef field="lpa_lpa22"/>
+        <Constant dataType="string">Yes</Constant>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="lpam_lpa22"/>
+        <Constant dataType="string">lpa15</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="/">
+      <Apply function="*">
+        <Apply function="*">
+          <FieldRef field="lpat_lpa22"/>
+          <Constant dataType="double">0.2167</Constant>
+        </Apply>
+        <Constant dataType="double">4</Constant>
+      </Apply>
+      <Constant dataType="double">90</Constant>
+    </Apply>
+    <Apply function="if">
+      <Apply function="and">
+        <Apply function="equal">
+          <FieldRef field="lpa_lpa22"/>
+          <Constant dataType="string">Yes</Constant>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="lpam_lpa22"/>
+          <Constant dataType="string">lpa30</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="/">
+        <Apply function="*">
+          <Apply function="*">
+            <FieldRef field="lpat_lpa22"/>
+            <Constant dataType="double">0.3833</Constant>
+          </Apply>
+          <Constant dataType="double">4</Constant>
+        </Apply>
+        <Constant dataType="double">90</Constant>
+      </Apply>
+      <Apply function="if">
+        <Apply function="and">
+          <Apply function="equal">
+            <FieldRef field="lpa_lpa22"/>
+            <Constant dataType="string">Yes</Constant>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="lpam_lpa22"/>
+            <Constant dataType="string">lpa60</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="/">
+          <Apply function="*">
+            <Apply function="*">
+              <FieldRef field="lpat_lpa22"/>
+              <Constant dataType="double">0.75</Constant>
+            </Apply>
+            <Constant dataType="double">4</Constant>
+          </Apply>
+          <Constant dataType="double">90</Constant>
+        </Apply>
+        <Apply function="if">
+          <Apply function="and">
+            <Apply function="equal">
+              <FieldRef field="lpa_lpa22"/>
+              <Constant dataType="string">Yes</Constant>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="lpam_lpa22"/>
+              <Constant dataType="string">lpa61</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="/">
+            <Apply function="*">
+              <Apply function="*">
+                <FieldRef field="lpat_lpa22"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+              <Constant dataType="double">4</Constant>
+            </Apply>
+            <Constant dataType="double">90</Constant>
+          </Apply>
+          <Constant dataType="double">0</Constant>
+        </Apply>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="noactivity" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="and">
+    <Apply function="and">
+      <Apply function="and">
+        <Apply function="and">
+          <Apply function="and">
+            <Apply function="and">
+              <Apply function="and">
+                <Apply function="and">
+                  <Apply function="and">
+                    <Apply function="and">
+                      <Apply function="and">
+                        <Apply function="and">
+                          <Apply function="and">
+                            <Apply function="and">
+                              <Apply function="and">
+                                <Apply function="and">
+                                  <Apply function="and">
+                                    <Apply function="and">
+                                      <Apply function="and">
+                                        <Apply function="and">
+                                          <Apply function="and">
+                                            <Apply function="and">
+                                              <Apply function="equal">
+                                                <FieldRef field="lpa_lpa0"/>
+                                                <Constant dataType="string">Yes</Constant>
+                                              </Apply>
+                                              <Apply function="equal">
+                                                <FieldRef field="walking_miss"/>
+                                                <Constant dataType="double">1</Constant>
+                                              </Apply>
+                                            </Apply>
+                                            <Apply function="equal">
+                                              <FieldRef field="garden_miss"/>
+                                              <Constant dataType="double">1</Constant>
+                                            </Apply>
+                                          </Apply>
+                                          <Apply function="equal">
+                                            <FieldRef field="swim_miss"/>
+                                            <Constant dataType="double">1</Constant>
+                                          </Apply>
+                                        </Apply>
+                                        <Apply function="equal">
+                                          <FieldRef field="bike_miss"/>
+                                          <Constant dataType="double">1</Constant>
+                                        </Apply>
+                                      </Apply>
+                                      <Apply function="equal">
+                                        <FieldRef field="dance_miss"/>
+                                        <Constant dataType="double">1</Constant>
+                                      </Apply>
+                                    </Apply>
+                                    <Apply function="equal">
+                                      <FieldRef field="hexercises_miss"/>
+                                      <Constant dataType="double">1</Constant>
+                                    </Apply>
+                                  </Apply>
+                                  <Apply function="equal">
+                                    <FieldRef field="hockey_miss"/>
+                                    <Constant dataType="double">1</Constant>
+                                  </Apply>
+                                </Apply>
+                                <Apply function="equal">
+                                  <FieldRef field="skate_miss"/>
+                                  <Constant dataType="double">1</Constant>
+                                </Apply>
+                              </Apply>
+                              <Apply function="equal">
+                                <FieldRef field="inline_miss"/>
+                                <Constant dataType="double">1</Constant>
+                              </Apply>
+                            </Apply>
+                            <Apply function="equal">
+                              <FieldRef field="jogrun_miss"/>
+                              <Constant dataType="double">1</Constant>
+                            </Apply>
+                          </Apply>
+                          <Apply function="equal">
+                            <FieldRef field="golf_miss"/>
+                            <Constant dataType="double">1</Constant>
+                          </Apply>
+                        </Apply>
+                        <Apply function="equal">
+                          <FieldRef field="aerobics_miss"/>
+                          <Constant dataType="double">1</Constant>
+                        </Apply>
+                      </Apply>
+                      <Apply function="equal">
+                        <FieldRef field="ski_miss"/>
+                        <Constant dataType="double">1</Constant>
+                      </Apply>
+                    </Apply>
+                    <Apply function="equal">
+                      <FieldRef field="bowl_miss"/>
+                      <Constant dataType="double">1</Constant>
+                    </Apply>
+                  </Apply>
+                  <Apply function="equal">
+                    <FieldRef field="baseball_miss"/>
+                    <Constant dataType="double">1</Constant>
+                  </Apply>
+                </Apply>
+                <Apply function="equal">
+                  <FieldRef field="tennis_miss"/>
+                  <Constant dataType="double">1</Constant>
+                </Apply>
+              </Apply>
+              <Apply function="equal">
+                <FieldRef field="weights_miss"/>
+                <Constant dataType="double">1</Constant>
+              </Apply>
+            </Apply>
+            <Apply function="equal">
+              <FieldRef field="fishing_miss"/>
+              <Constant dataType="double">1</Constant>
+            </Apply>
+          </Apply>
+          <Apply function="equal">
+            <FieldRef field="volleyball_miss"/>
+            <Constant dataType="double">1</Constant>
+          </Apply>
+        </Apply>
+        <Apply function="equal">
+          <FieldRef field="basketball_miss"/>
+          <Constant dataType="double">1</Constant>
+        </Apply>
+      </Apply>
+      <Apply function="equal">
+        <FieldRef field="soccer_miss"/>
+        <Constant dataType="double">1</Constant>
+      </Apply>
+    </Apply>
+    <Apply function="equal">
+      <FieldRef field="other_miss"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+  </Apply>
+  <Constant dataType="double">1</Constant>
+  <Constant dataType="double">0</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="PhysicalActivity_cont" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="equal">
+    <FieldRef field="missingactivity"/>
+    <Constant dataType="double">1</Constant>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="noactivity"/>
+      <Constant dataType="double">1</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+    <Apply function="/">
+      <Apply function="ln">
+        <Apply function="+">
+          <Apply function="+">
+            <Apply function="+">
+              <Apply function="+">
+                <Apply function="+">
+                  <Apply function="+">
+                    <Apply function="+">
+                      <Apply function="+">
+                        <Apply function="+">
+                          <Apply function="+">
+                            <Apply function="+">
+                              <Apply function="+">
+                                <Apply function="+">
+                                  <Apply function="+">
+                                    <Apply function="+">
+                                      <Apply function="+">
+                                        <Apply function="+">
+                                          <Apply function="+">
+                                            <Apply function="+">
+                                              <Apply function="+">
+                                                <Apply function="+">
+                                                  <Apply function="+">
+                                                    <Constant dataType="double">1</Constant>
+                                                    <FieldRef field="walking"/>
+                                                  </Apply>
+                                                  <FieldRef field="garden"/>
+                                                </Apply>
+                                                <FieldRef field="swim"/>
+                                              </Apply>
+                                              <FieldRef field="bike"/>
+                                            </Apply>
+                                            <FieldRef field="dance"/>
+                                          </Apply>
+                                          <FieldRef field="hexercises"/>
+                                        </Apply>
+                                        <FieldRef field="hockey"/>
+                                      </Apply>
+                                      <FieldRef field="skate"/>
+                                    </Apply>
+                                    <FieldRef field="inline"/>
+                                  </Apply>
+                                  <FieldRef field="jogrun"/>
+                                </Apply>
+                                <FieldRef field="golf"/>
+                              </Apply>
+                              <FieldRef field="aerobics"/>
+                            </Apply>
+                            <FieldRef field="ski"/>
+                          </Apply>
+                          <FieldRef field="bowl"/>
+                        </Apply>
+                        <FieldRef field="baseball"/>
+                      </Apply>
+                      <FieldRef field="tennis"/>
+                    </Apply>
+                    <FieldRef field="weights"/>
+                  </Apply>
+                  <FieldRef field="fishing"/>
+                </Apply>
+                <FieldRef field="volleyball"/>
+              </Apply>
+              <FieldRef field="basketball"/>
+            </Apply>
+            <FieldRef field="soccer"/>
+          </Apply>
+          <FieldRef field="other"/>
+        </Apply>
+      </Apply>
+      <Apply function="ln">
+        <Constant dataType="double">10</Constant>
+      </Apply>
+    </Apply>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="HeartDis_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="hd"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="hd"/>
+      <Constant dataType="string">hd1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="Diabetes_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="diab"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="diab"/>
+      <Constant dataType="string">diab1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="Stroke_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="stk"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="stk"/>
+      <Constant dataType="string">stk1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="Cancer_cat" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="is.na">
+    <FieldRef field="can"/>
+  </Apply>
+  <FieldRef field="NA"/>
+  <Apply function="if">
+    <Apply function="equal">
+      <FieldRef field="can"/>
+      <Constant dataType="string">can1</Constant>
+    </Apply>
+    <Constant dataType="double">1</Constant>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="DiabetesAge_Int" dataType="double" optype="continuous">
+<Apply function="*">
+  <FieldRef field="Diabetes_cat"/>
+  <FieldRef field="Age_cont"/>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="CancerAge_Int" dataType="double" optype="continuous">
+<Apply function="*">
+  <FieldRef field="Cancer_cat"/>
+  <FieldRef field="Age_cont"/>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="weightkg" dataType="double" optype="continuous">
+<Apply function="/">
+  <FieldRef field="weightlb"/>
+  <Constant dataType="double">2.2046226218</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="heightm" dataType="double" optype="continuous">
+<Apply function="/">
+  <Apply function="+">
+    <Apply function="*">
+      <FieldRef field="heightin_hft"/>
+      <Constant dataType="double">12</Constant>
+    </Apply>
+    <FieldRef field="heightin_hin"/>
+  </Apply>
+  <Constant dataType="double">39.3701</Constant>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="BMI" dataType="double" optype="continuous">
+<Apply function="/">
+  <FieldRef field="weightkg"/>
+  <Apply function="*">
+    <FieldRef field="heightm"/>
+    <FieldRef field="heightm"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+ <DerivedField name="BMI_spline" dataType="double" optype="continuous">
+<Apply function="if">
+  <Apply function="lessOrEqual">
+    <Apply function="-">
+      <FieldRef field="BMI"/>
+      <Constant dataType="double">35</Constant>
+    </Apply>
+    <Constant dataType="double">0</Constant>
+  </Apply>
+  <Constant dataType="double">0</Constant>
+  <Apply function="if">
+    <Apply function="greaterThan">
+      <Apply function="-">
+        <FieldRef field="BMI"/>
+        <Constant dataType="double">35</Constant>
+      </Apply>
+      <Constant dataType="double">0</Constant>
+    </Apply>
+    <Apply function="-">
+      <FieldRef field="BMI"/>
+      <Constant dataType="double">35</Constant>
+    </Apply>
+    <FieldRef field="NA"/>
+  </Apply>
+</Apply> 
+ </DerivedField>
+</LocalTransformations>
+ <GeneralRegressionModel modelType="CoxRegression" modelName="MPoRT_FemaleModel" functionName="regression" algorithmName="coxph" startTimeVariable="start" endTimeVariable="stop" statusVariable="EventDeath">
+  <MiningSchema>
+   <MiningField name="survival" usageType="predicted"/>
+   <MiningField name="Age_cont" usageType="active"/>
+   <MiningField name="Age_spline" usageType="active"/>
+   <MiningField name="QSLight_df" usageType="active"/>
+   <MiningField name="QSHeavy_df" usageType="active"/>
+   <MiningField name="PhysicalActivity_cont" usageType="active"/>
+   <MiningField name="DietScore_cont" usageType="active"/>
+   <MiningField name="AlcoholHeavy_cat" usageType="active"/>
+   <MiningField name="AlcoholMod_cat" usageType="active"/>
+   <MiningField name="DepIndMod_cat" usageType="active"/>
+   <MiningField name="DepIndHigh_cat" usageType="active"/>
+   <MiningField name="EduNoGrad_cat" usageType="active"/>
+   <MiningField name="EduHSGrad_cat" usageType="active"/>
+   <MiningField name="ImEth0To15_cat" usageType="active"/>
+   <MiningField name="ImEth16To30_cat" usageType="active"/>
+   <MiningField name="ImEth31To45_cat" usageType="active"/>
+   <MiningField name="HeartDis_cat" usageType="active"/>
+   <MiningField name="Stroke_cat" usageType="active"/>
+   <MiningField name="Cancer_cat" usageType="active"/>
+   <MiningField name="Diabetes_cat" usageType="active"/>
+   <MiningField name="BMI_spline" usageType="active"/>
+   <MiningField name="CancerAge_Int" usageType="active"/>
+   <MiningField name="DiabetesAge_Int" usageType="active"/>
+   <MiningField name="start" usageType="active"/>
+   <MiningField name="stop" usageType="active"/>
+   <MiningField name="EventDeath" usageType="active"/>
+  </MiningSchema>
+  <Output>
+   <OutputField name="Predicted_survival" feature="predictedValue"/>
+   <OutputField name="cumulativeHazard" feature="transformedValue">
+    <Apply function="*">
+     <Constant>-1.0</Constant>
+     <Apply function="ln">
+      <FieldRef field="Predicted_survival"/>
+     </Apply>
+    </Apply>
+   </OutputField>
+  </Output>
+  <ParameterList>
+   <Parameter name="p0" label="Age_cont" referencePoint="54.1488503875064"/>
+   <Parameter name="p1" label="Age_spline" referencePoint="0.425166096111415"/>
+   <Parameter name="p2" label="QSLight_df" referencePoint="0.254288098778076"/>
+   <Parameter name="p3" label="QSHeavy_df" referencePoint="0.106537866589885"/>
+   <Parameter name="p4" label="PhysicalActivity_cont" referencePoint="0.384627883292789"/>
+   <Parameter name="p5" label="DietScore_cont" referencePoint="5.49853294572499"/>
+   <Parameter name="p6" label="AlcoholHeavy_cat1" referencePoint="0.0684543381661514"/>
+   <Parameter name="p7" label="AlcoholMod_cat1" referencePoint="0.209846533953671"/>
+   <Parameter name="p8" label="DepIndMod_cat1" referencePoint="0.635538114524882"/>
+   <Parameter name="p9" label="DepIndHigh_cat1" referencePoint="0.168108932006613"/>
+   <Parameter name="p10" label="EduNoGrad_cat1" referencePoint="0.186175149194564"/>
+   <Parameter name="p11" label="EduHSGrad_cat1" referencePoint="0.265105373462728"/>
+   <Parameter name="p12" label="ImEth0To15_cat1" referencePoint="0.0375613833455229"/>
+   <Parameter name="p13" label="ImEth16To30_cat1" referencePoint="0.0437872986411156"/>
+   <Parameter name="p14" label="ImEth31To45_cat1" referencePoint="0.0547179900065762"/>
+   <Parameter name="p15" label="HeartDis_cat1" referencePoint="0.0668102785989539"/>
+   <Parameter name="p16" label="Stroke_cat1" referencePoint="0.0132262287424634"/>
+   <Parameter name="p17" label="Cancer_cat1" referencePoint="0.0222424357894866"/>
+   <Parameter name="p18" label="Diabetes_cat1" referencePoint="0.0636297147633476"/>
+   <Parameter name="p19" label="BMI_spline" referencePoint="0.286680013767083"/>
+   <Parameter name="p20" label="CancerAge_Int" referencePoint="1.45539528108809"/>
+   <Parameter name="p21" label="DiabetesAge_Int" referencePoint="4.19181719286816"/>
+  </ParameterList>
+  <FactorList>
+   <Predictor name="AlcoholHeavy_cat"/>
+   <Predictor name="AlcoholMod_cat"/>
+   <Predictor name="DepIndMod_cat"/>
+   <Predictor name="DepIndHigh_cat"/>
+   <Predictor name="EduNoGrad_cat"/>
+   <Predictor name="EduHSGrad_cat"/>
+   <Predictor name="ImEth0To15_cat"/>
+   <Predictor name="ImEth16To30_cat"/>
+   <Predictor name="ImEth31To45_cat"/>
+   <Predictor name="HeartDis_cat"/>
+   <Predictor name="Stroke_cat"/>
+   <Predictor name="Cancer_cat"/>
+   <Predictor name="Diabetes_cat"/>
+  </FactorList>
+  <CovariateList>
+   <Predictor name="Age_cont"/>
+   <Predictor name="Age_spline"/>
+   <Predictor name="QSLight_df"/>
+   <Predictor name="QSHeavy_df"/>
+   <Predictor name="PhysicalActivity_cont"/>
+   <Predictor name="DietScore_cont"/>
+   <Predictor name="BMI_spline"/>
+   <Predictor name="CancerAge_Int"/>
+   <Predictor name="DiabetesAge_Int"/>
+  </CovariateList>
+  <PPMatrix>
+   <PPCell value="1" predictorName="Age_cont" parameterName="p0"/>
+   <PPCell value="1" predictorName="Age_spline" parameterName="p1"/>
+   <PPCell value="1" predictorName="QSLight_df" parameterName="p2"/>
+   <PPCell value="1" predictorName="QSHeavy_df" parameterName="p3"/>
+   <PPCell value="1" predictorName="PhysicalActivity_cont" parameterName="p4"/>
+   <PPCell value="1" predictorName="DietScore_cont" parameterName="p5"/>
+   <PPCell value="1" predictorName="AlcoholHeavy_cat" parameterName="p6"/>
+   <PPCell value="1" predictorName="AlcoholMod_cat" parameterName="p7"/>
+   <PPCell value="1" predictorName="DepIndMod_cat" parameterName="p8"/>
+   <PPCell value="1" predictorName="DepIndHigh_cat" parameterName="p9"/>
+   <PPCell value="1" predictorName="EduNoGrad_cat" parameterName="p10"/>
+   <PPCell value="1" predictorName="EduHSGrad_cat" parameterName="p11"/>
+   <PPCell value="1" predictorName="ImEth0To15_cat" parameterName="p12"/>
+   <PPCell value="1" predictorName="ImEth16To30_cat" parameterName="p13"/>
+   <PPCell value="1" predictorName="ImEth31To45_cat" parameterName="p14"/>
+   <PPCell value="1" predictorName="HeartDis_cat" parameterName="p15"/>
+   <PPCell value="1" predictorName="Stroke_cat" parameterName="p16"/>
+   <PPCell value="1" predictorName="Cancer_cat" parameterName="p17"/>
+   <PPCell value="1" predictorName="Diabetes_cat" parameterName="p18"/>
+   <PPCell value="1" predictorName="BMI_spline" parameterName="p19"/>
+   <PPCell value="1" predictorName="CancerAge_Int" parameterName="p20"/>
+   <PPCell value="1" predictorName="DiabetesAge_Int" parameterName="p21"/>
+  </PPMatrix>
+  <ParamMatrix>
+   <PCell parameterName="p0" df="1" beta="0.0891888015031822"/>
+   <PCell parameterName="p1" df="1" beta="0.0292179374194524"/>
+   <PCell parameterName="p2" df="1" beta="0.806847255361553"/>
+   <PCell parameterName="p3" df="1" beta="1.18030397927685"/>
+   <PCell parameterName="p4" df="1" beta="-0.928355359618802"/>
+   <PCell parameterName="p5" df="1" beta="-0.0436711994153916"/>
+   <PCell parameterName="p6" df="1" beta="0.0797049709902844"/>
+   <PCell parameterName="p7" df="1" beta="-0.200633770475874"/>
+   <PCell parameterName="p8" df="1" beta="0.0465870069699607"/>
+   <PCell parameterName="p9" df="1" beta="0.204884993101581"/>
+   <PCell parameterName="p10" df="1" beta="0.063130759838211"/>
+   <PCell parameterName="p11" df="1" beta="0.0327085901623164"/>
+   <PCell parameterName="p12" df="1" beta="-0.604221147677245"/>
+   <PCell parameterName="p13" df="1" beta="-0.226038245860603"/>
+   <PCell parameterName="p14" df="1" beta="-0.132506130017869"/>
+   <PCell parameterName="p15" df="1" beta="0.341870654935853"/>
+   <PCell parameterName="p16" df="1" beta="0.235906455174582"/>
+   <PCell parameterName="p17" df="1" beta="4.85671898618751"/>
+   <PCell parameterName="p18" df="1" beta="1.16018072455526"/>
+   <PCell parameterName="p19" df="1" beta="0.0240673793676962"/>
+   <PCell parameterName="p20" df="1" beta="-0.0525599675753628"/>
+   <PCell parameterName="p21" df="1" beta="-0.00942704419043476"/>
+  </ParamMatrix>
+  <BaseCumHazardTables maxTime="11">
+   <BaselineCell time="1" cumHazard="0.00162888831994313"/>
+   <BaselineCell time="2" cumHazard="0.00387081862898266"/>
+   <BaselineCell time="3" cumHazard="0.00645247012367042"/>
+   <BaselineCell time="4" cumHazard="0.00929257917964735"/>
+   <BaselineCell time="5" cumHazard="0.0118055068777082"/>
+   <BaselineCell time="6" cumHazard="0.0142938820233747"/>
+   <BaselineCell time="7" cumHazard="0.0173234744780458"/>
+   <BaselineCell time="8" cumHazard="0.0200271665284219"/>
+   <BaselineCell time="9" cumHazard="0.0221487624873231"/>
+   <BaselineCell time="10" cumHazard="0.0245495842069407"/>
+   <BaselineCell time="11" cumHazard="0.0246691941896427"/>
+  </BaseCumHazardTables>
+ </GeneralRegressionModel>
+</PMML>

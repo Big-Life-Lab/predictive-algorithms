@@ -76,27 +76,30 @@ We also welcome collaborations for future development, validation, calibration o
 
 ## Algorithms
 
-**Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.[[1]](#ref1)
+**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[1]](#ref1)
 
-**Stroke Population Risk Tool (SPoRT).** A predictive algorithm for the calculation of 5-year incident risk of major stroke (hospitalization or death). Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years and 3 236 incident stroke events. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption).[[2]](#ref2)
+**Dementia Population Risk Tool (DemPoRT).** DemPoRT is currently under development. The protocol has been published: trial registration number NCT03155815 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT03155815) or reference.[[2]](#ref2)
 
-**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[3]](#ref3)
+**High Resourc Use Population Risk Tool (HRUPoRT).**  A predictive algoirthm for the transtion to high health care use (top 5% of health care user) over a 5-year period.  Developed and valdiated 2005 to 2010 Canadian Community Health Surveys invdually linked to health care use and cost in Ontario. Predictors are self-reported clincal, sociodemographic and health behaviours.
 
-**Dementia Population Risk Tool (DemPoRT).** DemPoRT is currently under development. The protocol has been published: trial registration number NCT03155815 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT03155815) or reference.[[4]](#ref4)
+**Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.[[3]](#ref3)
 
-**Predictions for Elder-life in the Community Tool - End-of-life(RESPECT-EOL).** RESPECT-EOL is currently under development. The protocol has been published: trial registration number NCT02779309 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02779309) or reference.[[5]](#ref5)
+**Risk Evaluation for Support: Predictions for Elder-life in the Community Tool - End-of-life (RESPECT-EOL).** A predictive algorithm for the risk of dying from all causes. The study base is all community-dwelling Ontarians who received home care from 2007 to 2015. There were 488,636 participants with 836,012 assessments and 298,657 deaths in the combined derivation and calibration cohort. The primary outcome is median survival time with 25th to 75th survival percentiles. Algorithm development was pre-specified and published (Trial registration NCT02779309) [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02779309) or reference.[[4]](#ref4)
+
+**Stroke Population Risk Tool (SPoRT).** A predictive algorithm for the calculation of 5-year incident risk of major stroke (hospitalization or death). Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years and 3 236 incident stroke events. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption).[[5]](#ref5)
 
 ## References
 
-1.  <a name="ref1"></a> Manuel DG, Perez R, Sanmartin C, Taljaard M, Hennessy D, Wilson K, et al. (2016) **Measuring Burden of Unhealthy Behaviours Using a Multivariable Predictive Approach: Life Expectancy Lost in Canada Attributable to Smoking, Alcohol, Physical Inactivity, and Diet**. PLoS Med 13(8): e1002082. [doi:10.1371/journal.pmed.1002082](http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002082)
+1.  <a name="ref1"></a> Taljaard M, Tuna M, Bennett C, Perez R, Rosella L, Tu JV, et al. **Cardiovascular Disease Population Risk Tool (CVDPoRT): predictive algorithm for assessing CVD risk in the community setting. A study protocol.** [BMJ open. 2014;4(10):e006701.](http://bmjopen.bmj.com/content/4/10/e006701.full)
 
-1.  <a name="ref2"></a> Manuel DG, Tuna M, Perez R, Tanuseputro P, Hennessy D, Bennett C, Rosella R, Sanmartin C, van Walraven C, Tu JV. **Predicting Stroke Risk Based on Health Behaviours: Development of the Stroke Population Risk Tool (SPoRT)**. PloS One. 2015 Dec 4;10(12):e0143342. [http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342)
+1.  <a name="ref2"></a> Fisher S, Hsu A, Mojaverian N, Taljaard M, Huyer G, Manuel DG, et al. **Dementia Population Risk Tool (DemPoRT): study protocol for a predictive algorithm assessing dementia risk in the community.** [BMJ open. 2017;7(10).](http://bmjopen.bmj.com/content/7/10/e018018)
 
-1.  <a name="ref3"></a> Taljaard M, Tuna M, Bennett C, Perez R, Rosella L, Tu JV, et al. **Cardiovascular Disease Population Risk Tool (CVDPoRT): predictive algorithm for assessing CVD risk in the community setting. A study protocol.** [BMJ open. 2014;4(10):e006701.](http://bmjopen.bmj.com/content/4/10/e006701.full)
+1.  <a name="ref3"></a> Manuel DG, Perez R, Sanmartin C, Taljaard M, Hennessy D, Wilson K, et al. (2016) **Measuring Burden of Unhealthy Behaviours Using a Multivariable Predictive Approach: Life Expectancy Lost in Canada Attributable to Smoking, Alcohol, Physical Inactivity, and Diet**. PLoS Med 13(8): e1002082. [doi:10.1371/journal.pmed.1002082](http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002082)
 
-1.  <a name="ref4"></a> Fisher S, Hsu A, Mojaverian N, Taljaard M, Huyer G, Manuel DG, et al. **Dementia Population Risk Tool (DemPoRT): study protocol for a predictive algorithm assessing dementia risk in the community.** [BMJ open. 2017;7(10).](http://bmjopen.bmj.com/content/7/10/e018018)
+1.  <a name="ref4"></a> Hsu AT, Manuel DG, Taljaard M, Chalifoux M, Bennett C, Costa AP, et al. Algorithm for predicting death among older adults in the home care setting: study protocol for the Risk Evaluation for Support: Predictions for Elder-life in the Community Tool (RESPECT). [BMJ open. 2016;6(12).](http://bmjopen.bmj.com/content/6/12/e013666).
 
-1.  <a name="ref5"></a> Hsu AT, Manuel DG, Taljaard M, Chalifoux M, Bennett C, Costa AP, et al. Algorithm for predicting death among older adults in the home care setting: study protocol for the Risk Evaluation for Support: Predictions for Elder-life in the Community Tool (RESPECT). [BMJ open. 2016;6(12).](http://bmjopen.bmj.com/content/6/12/e013666).
+1.  <a name="ref5"></a> Manuel DG, Tuna M, Perez R, Tanuseputro P, Hennessy D, Bennett C, Rosella R, Sanmartin C, van Walraven C, Tu JV. **Predicting Stroke Risk Based on Health Behaviours: Development of the Stroke Population Risk Tool (SPoRT)**. PloS One. 2015 Dec 4;10(12):e0143342. [http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143342)
+
 
 ## Glossary of terms
 
