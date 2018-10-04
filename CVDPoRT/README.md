@@ -41,6 +41,6 @@ The recommend algorithm for use in the clinical or population setting.
 
 ## References
 
-1. Manuel DG, Tuna M, Bennett C,  Hennessy D, Rosella L, Sanmartin C, Tu JV, Perez R, Fisher S, Taljaard M (2018) **Development and validation of a cardiovascular disease risk-prediction model using population health surveys: the Cardiovascular Disease Population Risk Tool (CVDPoRT)**. [CMAJ 2018 Month X;190:Exxx-x. doi: 10.1503/cmaj.170914](http://,,,)
+1. Manuel DG, Tuna M, Bennett C,  Hennessy D, Rosella L, Sanmartin C, Tu JV, Perez R, Fisher S, Taljaard M (2018) **Development and validation of a cardiovascular disease risk-prediction model using population health surveys: the Cardiovascular Disease Population Risk Tool (CVDPoRT)**. [CMAJ 2018 Month X;190:E871-E882; DOI: 10.1503/cmaj.170914](http://www.cmaj.ca/content/190/29/E871)
 
 Algorithm viewer [https://ottawa-mhealth.github.io/PBL-algorithm-viewer/](https://ottawa-mhealth.github.io/PBL-algorithm-viewer/)
