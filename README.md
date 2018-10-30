@@ -1,5 +1,7 @@
 # Predictive algorithm reference documents
 
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 ## Important
 
 Install the git-lfs extension to support large files before cloning this repo (https://git-lfs.github.com/).
@@ -76,20 +78,21 @@ We also welcome collaborations for future development, validation, calibration o
 
 ## Algorithms
 
-**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[1]](#ref1)
+**Cardiovascular Population Risk Tool (CVDPoRT).** CVDPoRT is currently under development. The protocol has been published: trial registration number NCT02267447 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02267447) or reference.[[1]](#ref1)[[2]](#ref6)
 
-**Dementia Population Risk Tool (DemPoRT).** DemPoRT is currently under development. The protocol has been published: trial registration number NCT03155815 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT03155815) or reference.[[2]](#ref2)
+**Dementia Population Risk Tool (DemPoRT).** DemPoRT is currently under development. The protocol has been published: trial registration number NCT03155815 at [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT03155815) or reference.[[3]](#ref2)
 
-**High Resourc Use Population Risk Tool (HRUPoRT).**  A predictive algoirthm for the transtion to high health care use (top 5% of health care user) over a 5-year period.  Developed and valdiated 2005 to 2010 Canadian Community Health Surveys invdually linked to health care use and cost in Ontario. Predictors are self-reported clincal, sociodemographic and health behaviours.
+**High Resource Use Population Risk Tool (HRUPoRT).**  A predictive algoirthm for the transtion to high health care use (top 5% of health care user) over a 5-year period.  Developed and valdiated 2005 to 2010 Canadian Community Health Surveys invdually linked to health care use and cost in Ontario. Predictors are self-reported clincal, sociodemographic and health behaviours.
 
-**Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.[[3]](#ref3)
+**Mortality Population Risk Tool (MPoRT).** A predictive algorithm for the calculation of 5-year risk of dying from all-causes. Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years of follow-up and 9,900 deaths. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption). The model is currently calibrated for Canada, 2013, with provisions to calibrate to other countries.[[4]](#ref3)
 
-**Risk Evaluation for Support: Predictions for Elder-life in the Community Tool - End-of-life (RESPECT-EOL).** A predictive algorithm for the risk of dying from all causes. The study base is all community-dwelling Ontarians who received home care from 2007 to 2015. There were 488,636 participants with 836,012 assessments and 298,657 deaths in the combined derivation and calibration cohort. The primary outcome is median survival time with 25th to 75th survival percentiles. Algorithm development was pre-specified and published (Trial registration NCT02779309) [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02779309) or reference.[[4]](#ref4)
+**Risk Evaluation for Support: Predictions for Elder-life in the Community Tool - End-of-life (RESPECT-EOL).** A predictive algorithm for the risk of dying from all causes. The study base is all community-dwelling Ontarians who received home care from 2007 to 2015. There were 488,636 participants with 836,012 assessments and 298,657 deaths in the combined derivation and calibration cohort. The primary outcome is median survival time with 25th to 75th survival percentiles. Algorithm development was pre-specified and published (Trial registration NCT02779309) [ClinicalTrials.gov](https://clinicaltrials.gov/show/NCT02779309) or reference.[[5]](#ref4)
 
-**Stroke Population Risk Tool (SPoRT).** A predictive algorithm for the calculation of 5-year incident risk of major stroke (hospitalization or death). Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years and 3 236 incident stroke events. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption).[[5]](#ref5)
+**Stroke Population Risk Tool (SPoRT).** A predictive algorithm for the calculation of 5-year incident risk of major stroke (hospitalization or death). Developed and validated using the 2001 to 2008 Canadian Community Health Surveys (CCHS) with approximately 1 million person-years and 3 236 incident stroke events. Focus on health behaviours (smoking, diet, physical inactivity and alcohol consumption).[[6]](#ref5)
 
 ## References
 
+1. <a name="ref6"></a>Manuel DG, Tuna M, Bennett C,  Hennessy D, Rosella L, Sanmartin C, Tu JV, Perez R, Fisher S, Taljaard M (2018) **Development and validation of a cardiovascular disease risk-prediction model using population health surveys: the Cardiovascular Disease Population Risk Tool (CVDPoRT)**. [CMAJ 2018 Month X;190:E871-E882; DOI: 10.1503/cmaj.170914](http://www.cmaj.ca/content/190/29/E871)
 1.  <a name="ref1"></a> Taljaard M, Tuna M, Bennett C, Perez R, Rosella L, Tu JV, et al. **Cardiovascular Disease Population Risk Tool (CVDPoRT): predictive algorithm for assessing CVD risk in the community setting. A study protocol.** [BMJ open. 2014;4(10):e006701.](http://bmjopen.bmj.com/content/4/10/e006701.full)
 
 1.  <a name="ref2"></a> Fisher S, Hsu A, Mojaverian N, Taljaard M, Huyer G, Manuel DG, et al. **Dementia Population Risk Tool (DemPoRT): study protocol for a predictive algorithm assessing dementia risk in the community.** [BMJ open. 2017;7(10).](http://bmjopen.bmj.com/content/7/10/e018018)
