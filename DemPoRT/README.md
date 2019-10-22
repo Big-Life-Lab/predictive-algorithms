@@ -1,8 +1,6 @@
 # DemPoRT - Dementia Population Risk Tool
 
-See [projectbiglife.ca](https://www.projectbiglife.ca) for an example of indivudal calculations of 5-year risk and 'heart age', as well as additional infomation about the algorithm and API.  
-
-**Dementia Population Risk Tool (CVDPoRT).** A predictive algorithm for the calculation of 5-year risk of dementia. Developed and validated using the 2001 to 2011 Canadian Community Health Surveys (CCHS).  Focus is on health behaviours (smoking, diet, physical inactivity and alcohol consumption).
+**Dementia Population Risk Tool (DemPoRT).** A predictive algorithm for the calculation of 5-year risk of dementia. Developed and validated using the 2001 to 2011 Canadian Community Health Surveys (CCHS).  Focus is on health behaviours (smoking, diet, physical inactivity and alcohol consumption).
 
 There were 75,460 respondents aged 55+ years, 8,448 dementia events, and 348,677 person-years follow-up in the combined derivation and validation cohorts.
 
