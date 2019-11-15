@@ -50,7 +50,7 @@ There several approaches to calculate risk using the provided documents:
 
 **2)** PMML can also be used within specifically-designed calculation or scoring engines such as [http://openscoring.io](http://openscoring.io/) or [https://zementis.com](https://zementis.com).
 
-**3)** We have an API to perform calculations based on the PMML files within this repository. [API documentation.](https://ottawa-mhealth.github.io/pbl-calculator-engine-docs/) For example, see Heart and Stroke Foundation’s [eHealth Risk Assessment](https://ehealth.heartandstroke.ca). APIs provide additional outcome measures and features. For example, the MPoRT algorithm main outcome is 1-year risk, but also provided are:
+**3)** We have an API to perform calculations based on the PMML files within this repository. [API documentation.](https://big-life-lab.github.io/pbl-calculator-engine-docs/) For example, see Heart and Stroke Foundation’s [eHealth Risk Assessment](https://ehealth.heartandstroke.ca). APIs provide additional outcome measures and features. For example, the MPoRT algorithm main outcome is 1-year risk, but also provided are:
 
 * life expectancy;
 * survival to specified age ("Will you live to see it?);
